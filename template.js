@@ -1,14 +1,14 @@
-import gsap from 'gsap';
+import { gsap } from '../../vendor.js'
 
-let ctx;
+let ctx
 
 function init() {}
 
 function cleanup() {
-  ctx && ctx.revert();
+  ctx && ctx.revert()
 }
 
 export default {
   init,
   cleanup,
-};
+}
