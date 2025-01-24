@@ -1,0 +1,18 @@
+@use './variables.scss';
+
+[anm-hero=headline] .char {
+    transform: translate(0%, 110%) rotate(10deg);
+}
+
+[anm-hero=text] .line {
+    transform: translate(0rem, 5rem) rotate(5deg);
+    clip-path: variables.$topClipPath;
+}
+
+.g_brand_circle {
+    transform: scale(0) rotate(45deg);
+}
+
+[anm-hero=trust-logos] svg {
+    transform: translate(0%, 110%);
+}

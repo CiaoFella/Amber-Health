@@ -8,7 +8,6 @@
   will-change: transform;
   transition: opacity 0.3s, color 0.4s;
   color: white;
-  mix-blend-mode: exclusion;
 
   &:before {
     content: "";
@@ -19,9 +18,9 @@
     width: 48px;
     height: 48px;
     transform: scale(0);
-    background: currentColor;
+    background: linear-gradient(90deg, rgba(254,168,61,0.2) 0%, rgba(255,108,69,1) 100%);
     border-radius: 50%;
-    transition: transform 0.3s ease-in-out, opacity 0.1s;
+    transition: transform 0.3s ease-in-out, opacity 0.1s, filter 0.3s ease-in-out;
   }
 
   &.-normal, &.-text {
@@ -42,17 +41,18 @@
   }
 
   &.-visible:before {
-    transform: scale(0.2);
+    transform: scale(0.3);
   }
 
   &.-visible.-active:before {
-    transform: scale(0.1);
+    transform: scale(0.4);
     transition-duration: 0.2s;
   }
 
   &.-pointer:before {
-    transform: scale(0.4);
-    opacity: 0.75;
+    transform: scale(0.7);
+    opacity: 0.5;
+    filter: blur(5px);
   }
 
   &.-text:before {

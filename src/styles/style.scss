@@ -2,6 +2,7 @@
 @import './detail.scss';
 @import './home.scss';
 @import './cursor.scss';
+@import './hero.scss';
 
 
 .is-animating {
@@ -39,4 +40,8 @@ html.lenis, html.lenis body {
 
 .lenis.lenis-smooth iframe {
     pointer-events: none;
+}
+
+[anm-btn=icon-wrap-1] {
+  scale: 0;
 }
