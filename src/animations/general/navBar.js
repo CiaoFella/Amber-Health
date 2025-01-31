@@ -7,7 +7,13 @@ function init() {
   if (!navbar) return
 
   const container = navbar.querySelector('[anm-navbar=container]')
-  const bodyBackgroundColor = getComputedStyle(document.body).backgroundColor
+  const cta = navbar.querySelector('[anm-btn]')
+
+  const currentColor = getComputedStyle(navbar).color
+  const currentBackgroundColor = getComputedStyle(navbar).backgroundColor
+
+  const background = 'var(--swatch--light)'
+  const textColor = 'var(--swatch--dark)'
 
   const backgroundTl = gsap.timeline({
     defaults: { duration: 0.5, ease: 'power1.inOut' },
@@ -20,17 +26,27 @@ function init() {
   })
 
   backgroundTl
-    .to(container, {
-      paddingTop: '1.5rem',
-      paddingBottom: '1.5rem',
-    })
     .to(
+      container,
+      {
+        paddingTop: '1.5rem',
+        paddingBottom: '1.5rem',
+      },
+      0
+    )
+    .fromTo(
       navbar,
       {
-        backgroundColor: bodyBackgroundColor,
+        backgroundColor: currentBackgroundColor,
+        color: currentColor,
       },
-      '<'
+      {
+        backgroundColor: background,
+        color: textColor,
+      },
+      0
     )
+    .to(cta, { backgroundColor: 'var(--swatch--dark)', color: 'var(--swatch--light)', borderColor: 'var(--swatch--dark)' }, 0)
 
   navbarTl.to(navbar, {
     yPercent: -100,
