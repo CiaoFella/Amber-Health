@@ -1,3 +1,4 @@
+import endOfPageGradient from './general/endOfPageGradient.js'
 import footer from './general/footer.js'
 import navBar from './general/navBar.js'
 import bgGradient from './shared/bgGradient.js'
@@ -13,10 +14,10 @@ function init() {
   bgGradient.init()
   textReveal.init()
   elementReveal.init()
-  footer.init()
   buttons.init()
   navBar.init()
   serviceOverview.init()
+  endOfPageGradient.init()
 }
 
 function cleanup() {
@@ -27,6 +28,7 @@ function cleanup() {
   elementReveal.cleanup()
   navBar.cleanup()
   serviceOverview.cleanup()
+  endOfPageGradient.cleanup()
 }
 
 export default {

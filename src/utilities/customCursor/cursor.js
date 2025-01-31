@@ -18,6 +18,11 @@ export default class Cursor {
     this.el.className = 'cb-cursor'
     this.text = document.createElement('div')
     this.text.className = 'cb-cursor-text'
+
+    // Create quickTo functions for x and y
+    this.moveX = gsap.quickTo(this.el, 'x', { duration: this.options.speed, ease: this.options.ease, force3D: true })
+    this.moveY = gsap.quickTo(this.el, 'y', { duration: this.options.speed, ease: this.options.ease, force3D: true })
+
     this.init()
   }
 
@@ -39,7 +44,7 @@ export default class Cursor {
       self.show()
     })
 
-    this.body.addEventListener('mousemove', e => {
+    this.body.addEventListener('mousemove', (e) => {
       this.pos = {
         x: this.stick ? this.stick.x - (this.stick.x - e.clientX) * 0.15 : e.clientX,
         y: this.stick ? this.stick.y - (this.stick.y - e.clientY) * 0.15 : e.clientY,
@@ -55,7 +60,7 @@ export default class Cursor {
       self.removeState('-active')
     })
 
-    this.body.querySelectorAll(pointerCollection).forEach(el => {
+    this.body.querySelectorAll(pointerCollection).forEach((el) => {
       el.addEventListener('mouseenter', () => {
         self.setState('-pointer')
       })
@@ -64,7 +69,7 @@ export default class Cursor {
       })
     })
 
-    this.body.querySelectorAll('iframe').forEach(el => {
+    this.body.querySelectorAll('iframe').forEach((el) => {
       el.addEventListener('mouseenter', () => {
         self.hide()
       })
@@ -73,7 +78,7 @@ export default class Cursor {
       })
     })
 
-    this.body.querySelectorAll('[data-cursor]').forEach(el => {
+    this.body.querySelectorAll('[data-cursor]').forEach((el) => {
       el.addEventListener('mouseenter', function () {
         self.setState(this.dataset.cursor)
       })
@@ -82,7 +87,7 @@ export default class Cursor {
       })
     })
 
-    this.body.querySelectorAll('[data-cursor-text]').forEach(el => {
+    this.body.querySelectorAll('[data-cursor-text]').forEach((el) => {
       el.addEventListener('mouseenter', function () {
         self.setText(this.dataset.cursorText)
       })
@@ -91,7 +96,7 @@ export default class Cursor {
       })
     })
 
-    this.body.querySelectorAll('[data-cursor-stick]').forEach(el => {
+    this.body.querySelectorAll('[data-cursor-stick]').forEach((el) => {
       el.addEventListener('mouseenter', function () {
         self.setStick(this.dataset.cursorStick)
       })
@@ -142,14 +147,9 @@ export default class Cursor {
   }
 
   move(x, y, duration) {
-    gsap.to(this.el, {
-      x: x || this.pos.x,
-      y: y || this.pos.y,
-      force3D: true,
-      overwrite: true,
-      ease: this.options.ease,
-      duration: this.visible ? duration || this.options.speed : 0,
-    })
+    // Use the quickTo functions instead of gsap.to
+    this.moveX(x || this.pos.x)
+    this.moveY(y || this.pos.y)
   }
 
   show() {

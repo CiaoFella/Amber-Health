@@ -3,6 +3,7 @@
 @import './home.scss';
 @import './cursor.scss';
 @import './hero.scss';
+@import './endOfPageGradient.scss';
 
 
 .is-animating {
@@ -44,4 +45,8 @@ html.lenis, html.lenis body {
 
 [anm-btn=icon-wrap-1] {
   scale: 0;
+}
+
+[data-theme] {
+    transition: background-color 0.5s cubic-bezier(.215, .61, .355, 1), color 0.5s cubic-bezier(.215, .61, .355, 1), border-color 0.5s cubic-bezier(.215, .61, .355, 1);
 }
