@@ -1,39 +1,28 @@
-import { Lenis } from '../vendor.js'
+import { LocomotiveScroll, gsap } from '../vendor.js'
+import { isDesktop, isTablet } from './variables.js'
 
-const lenis = new Lenis({
-  lerp: 0.1,
-  wheelMultiplier: 0.7,
-  gestureOrientation: 'vertical',
-  normalizeWheel: false,
-  smoothTouch: false,
-})
-function raf(time) {
-  lenis.raf(time)
-  requestAnimationFrame(raf)
-}
-requestAnimationFrame(raf)
+const mm = gsap.matchMedia()
 
-document.querySelectorAll('[data-lenis-start]').forEach(function (element) {
-  element.addEventListener('click', function () {
-    lenis.start()
-  })
+let lerp
+let wheelMultiplier
+let touchMultiplier
+
+mm.add(isTablet, () => {
+  lerp = 0.975
+  wheelMultiplier = 0
+  touchMultiplier = 0
 })
 
-document.querySelectorAll('[data-lenis-stop]').forEach(function (element) {
-  element.addEventListener('click', function () {
-    lenis.stop()
-  })
+mm.add(isDesktop, () => {
+  lerp = 0.2
+  wheelMultiplier = 0.7
+  touchMultiplier = 0
 })
 
-document.querySelectorAll('[data-lenis-toggle]').forEach(function (element) {
-  element.addEventListener('click', function () {
-    element.classList.toggle('stop-scroll')
-    if (element.classList.contains('stop-scroll')) {
-      lenis.stop()
-    } else {
-      lenis.start()
-    }
-  })
+const locomotiveScroll = new LocomotiveScroll({
+  lerp: lerp,
+  wheelMultiplier: wheelMultiplier,
+  touchMultiplier: touchMultiplier,
 })
 
-export default lenis
+export default locomotiveScroll
