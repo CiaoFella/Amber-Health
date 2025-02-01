@@ -21,10 +21,8 @@ function cleanupCurrentModule() {
     currentAnimationModule.cleanup()
   }
 
-  // Clean up any lingering ScrollTriggers
-  ScrollTrigger.getAll().forEach(trigger => trigger.kill())
+  ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
 
-  // Reset the current animation module reference
   currentAnimationModule = null
 }
 function getBaseUrl() {
@@ -37,7 +35,7 @@ function getBaseUrl() {
 function loadPageModule(pageName) {
   const baseUrl = getBaseUrl()
   import(/* webpackIgnore: true */ `${baseUrl}pages/${pageName}.js`)
-    .then(module => {
+    .then((module) => {
       currentAnimationModule = module.default || {}
       // console.log(`${baseUrl}pages/${pageName}.js`)
       if (typeof currentAnimationModule.init === 'function') {
@@ -46,7 +44,7 @@ function loadPageModule(pageName) {
         console.warn(`Module for page ${pageName} does not have an init function.`)
       }
     })
-    .catch(err => {
+    .catch((err) => {
       console.error(`Failed to load module for page: ${pageName}`, err)
       currentAnimationModule = {} // Set to an empty object to avoid further errors
     })
@@ -63,7 +61,7 @@ mm.add(isDesktop, () => {
   magneticCursor()
 })
 
-document.addEventListener('onPageReady', event => {
+document.addEventListener('onPageReady', (event) => {
   if (event.detail === true) {
     handlePageEnterAnimation(getCurrentPage()).play()
   }
@@ -77,10 +75,9 @@ barba.hooks.afterEnter(() => {
   cleanupCurrentModule()
 })
 
-barba.hooks.after(data => {
+barba.hooks.after((data) => {
   const pageName = data.next.namespace
   lenis.scrollTo(0, { duration: 0, immediate: true })
-  createSplitTypes.init()
   updateCurrentNavLink()
   loadPageModule(pageName)
   handleResponsiveElements()

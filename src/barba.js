@@ -1,40 +1,81 @@
+import createSplitTypes from './utilities/createSplitTypes.js'
 import { cursor, magneticCursor } from './utilities/customCursor/customCursor.js'
 import { closeMenu } from './utilities/helper.js'
 import { proxy } from './utilities/pageReadyListener.js'
-import { isDesktop } from './utilities/variables.js'
+import { bottomClipPath, fullClipPath, isDesktop, topClipPath } from './utilities/variables.js'
 import { gsap, barba, ScrollTrigger } from './vendor.js'
 
 gsap.registerPlugin(ScrollTrigger)
 
 const mm = gsap.matchMedia()
 
-barba.hooks.before(data => {
+barba.hooks.before((data) => {
   data.next.container.classList.add('is-animating')
 })
 
-barba.hooks.after(data => {
+barba.hooks.after((data) => {
   data.next.container.classList.remove('is-animating')
 })
 
 barba.init({
-  preventRunning: false,
+  preventRunning: true,
   transitions: [
     {
       name: 'default-transition',
-      sync: true,
-      leave(data) {
+      async leave(data) {
         const done = this.async()
+        const transitionWrap = document.querySelector('[anm-transition=wrap]')
+        const transitionLogo = document.querySelector('[anm-transition=logo]')
+
+        const tl = gsap.timeline({ defaults: { duration: 1.5, ease: 'expo.inOut' } })
+
+        tl.set(transitionWrap, {
+          display: 'flex',
+        }).set(transitionLogo, {
+          yPercent: 100,
+        })
+
+        tl.fromTo(transitionWrap, { clipPath: bottomClipPath }, { clipPath: fullClipPath, ease: 'expo.inOut', onComplete: done }).to(
+          transitionLogo,
+          { yPercent: 0, duration: 1, ease: 'expo.out' },
+          '<+75%'
+        )
+
         proxy.pageReady = false
-        closeMenu()
       },
       after(data) {
+        const transitionWrap = document.querySelector('[anm-transition=wrap]')
+        const transitionLogo = document.querySelector('[anm-transition=logo]')
+
         mm.add(isDesktop, () => {
           const customCursor = document.querySelector('.cb-cursor')
           customCursor.remove()
           cursor.init()
           magneticCursor()
         })
-        proxy.pageReady = true
+
+        createSplitTypes.cleanup()
+        createSplitTypes.init()
+
+        const navbar = document.querySelector('[anm-navbar=wrap]')
+
+        if (navbar) {
+          navbar.classList.remove('is-scrolled', 'is-hidden')
+        }
+
+        const tl = gsap.timeline({ defaults: { duration: 1.5, ease: 'expo.inOut' } })
+
+        tl.to(transitionLogo, { yPercent: -100, duration: 1, ease: 'expo.in' }).to(
+          transitionWrap,
+          {
+            clipPath: topClipPath,
+            onComplete: () => {
+              gsap.set(transitionWrap, { display: 'none' })
+              proxy.pageReady = true
+            },
+          },
+          '<+25%'
+        )
       },
     },
   ],
