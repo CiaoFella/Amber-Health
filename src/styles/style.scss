@@ -3,50 +3,56 @@
 @import './home.scss';
 @import './cursor.scss';
 @import './hero.scss';
-@import './endOfPageGradient.scss';
-
+@import './movingGradient.scss';
+@import './navbar.scss';
+@import './approach.scss';
 
 .is-animating {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 9999;
-    clip-path: polygon(0% 0%, 100% 0%, 100% 0px, 0% 0px);
-    width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  clip-path: polygon(0% 0%, 100% 0%, 100% 0px, 0% 0px);
+  width: 100%;
 }
 
-[data-page-loader=section] {
-    display: flex;
+[data-page-loader='section'] {
+  display: flex;
 }
 
 html {
-    height: auto;
+  height: auto;
 }
 
-html.lenis, html.lenis body {
-    height: auto;
+html.lenis,
+html.lenis body {
+  height: auto;
 }
-  
+
 .lenis.lenis-smooth {
-    scroll-behavior: auto !important;
+  scroll-behavior: auto !important;
 }
 
 .lenis.lenis-smooth [data-lenis-prevent] {
-    overscroll-behavior: contain;
+  overscroll-behavior: contain;
 }
 
 .lenis.lenis-stopped {
-    overflow: hidden;
+  overflow: hidden;
 }
 
 .lenis.lenis-smooth iframe {
-    pointer-events: none;
+  pointer-events: none;
 }
 
-[anm-btn=icon-wrap-1] {
+[anm-btn='icon-wrap-1'] {
   scale: 0;
 }
 
 [data-theme] {
-    transition: background-color 0.5s cubic-bezier(.215, .61, .355, 1), color 0.5s cubic-bezier(.215, .61, .355, 1), border-color 0.5s cubic-bezier(.215, .61, .355, 1);
+  transition: background-color 0.5s cubic-bezier(0.215, 0.61, 0.355, 1), color 0.5s cubic-bezier(0.215, 0.61, 0.355, 1), border-color 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+[anm-transition='wrap'] {
+  display: none;
 }

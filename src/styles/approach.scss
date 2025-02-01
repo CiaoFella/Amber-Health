@@ -1,0 +1,51 @@
+@use './variables.scss';
+
+[anm-approach='item'] {
+  &.is-active {
+    [anm-approach='headline'] {
+      opacity: 1;
+    }
+
+    [anm-approach='text'] {
+      height: var(--content-height);
+
+      .line {
+        clip-path: variables.$fullclipPath;
+        transform: translateY(0);
+        @for $i from 1 through 10 {
+          &:nth-child(#{$i}) {
+            transition-delay: #{$i * 0.1}s;
+          }
+        }
+      }
+    }
+  }
+
+  [anm-approach='text'] {
+    transition: height 1s variables.$expo-out, transform 1s variables.$expo-out;
+    height: 0;
+    overflow: hidden;
+
+    .line {
+      clip-path: variables.$topClipPath;
+      transition: clip-path 1s variables.$expo-out, transform 1s variables.$expo-out;
+      transform: translateY(100%);
+    }
+  }
+
+  [anm-approach='headline'] {
+    opacity: 0.5;
+    transition: opacity 1s variables.$expo-out;
+  }
+}
+
+[anm-approach='visuals'] {
+  .g_visual_wrap {
+    opacity: 0;
+    transition: opacity 1s variables.$expo-out;
+
+    &.is-active {
+      opacity: 1;
+    }
+  }
+}
