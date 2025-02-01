@@ -36,16 +36,57 @@
   }
 }
 
-.footer_gradient_wrap {
+.moving_gradient_wrap {
   background: var(--swatch--light);
 
-  .footer_gradients_container {
+  .moving_gradients_container {
     filter: url(#goo) blur(30px);
     overflow: hidden;
     opacity: 0.7;
+
+    &.is-transition {
+      filter: url(#transitionGoo) blur(60px);
+
+      .moving_gradient {
+        &.is-1 {
+          width: calc(variables.$circle-size * 0.9);
+          height: calc(variables.$circle-size * 0.9);
+          top: calc(50% - variables.$circle-size * 0.45);
+          left: calc(50% - variables.$circle-size * 0.45);
+        }
+
+        &.is-2 {
+          width: calc(variables.$circle-size * 0.6);
+          height: calc(variables.$circle-size * 0.6);
+          top: calc(50% - variables.$circle-size * 0.3);
+          left: calc(50% - variables.$circle-size * 0.3);
+        }
+
+        &.is-3 {
+          width: calc(variables.$circle-size * 0.75);
+          height: calc(variables.$circle-size * 0.75);
+          top: calc(50% - variables.$circle-size * 0.375);
+          left: calc(50% - variables.$circle-size * 0.375);
+        }
+
+        &.is-4 {
+          width: calc(variables.$circle-size * 0.5);
+          height: calc(variables.$circle-size * 0.5);
+          top: calc(50% - variables.$circle-size * 0.25);
+          left: calc(50% - variables.$circle-size * 0.25);
+        }
+
+        &.is-5 {
+          width: calc(variables.$circle-size * 1);
+          height: calc(variables.$circle-size * 1);
+          top: calc(50% - variables.$circle-size * 0.5);
+          left: calc(50% - variables.$circle-size * 0.5);
+        }
+      }
+    }
   }
 
-  .footer_gradient {
+  .moving_gradient {
     position: absolute;
     mix-blend-mode: variables.$blending;
 
@@ -120,7 +161,7 @@
     }
   }
 
-  .footer_gradient_interactive {
+  .moving_gradient_interactive {
     position: absolute;
     background: radial-gradient(circle at center, variables.$color-interactive 0, rgba(140, 100, 255, 0) 50%) no-repeat;
     mix-blend-mode: variables.$blending;

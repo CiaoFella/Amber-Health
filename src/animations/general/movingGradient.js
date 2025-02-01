@@ -5,14 +5,18 @@ let ctx
 let moveTimeout
 
 function init() {
-  const interBubble = document.querySelector('.footer_gradient_interactive')
-  const container = document.querySelector('.footer_gradients_container')
-  if (!interBubble || !container) return
+  const containers = document.querySelectorAll('.moving_gradients_container')
+  if (containers.length === 0) return
 
-  const moveX = gsap.quickTo(interBubble, 'left', { duration: 0.5, ease: 'power2.out', unit: 'px' })
-  const moveY = gsap.quickTo(interBubble, 'top', { duration: 0.5, ease: 'power2.out', unit: 'px' })
+  containers.forEach((container) => {
+    ctx = gsap.ticker.add(() => move(container))
+  })
 
-  function move() {
+  function move(container) {
+    const interBubble = container.querySelector('.moving_gradient_interactive')
+    const moveX = gsap.quickTo(interBubble, 'left', { duration: 0.5, ease: 'power2.out' })
+    const moveY = gsap.quickTo(interBubble, 'top', { duration: 0.5, ease: 'power2.out' })
+
     if (cursor && cursor.pos) {
       const containerRect = container.getBoundingClientRect()
       const relativeX = cursor.pos.x - containerRect.left
@@ -30,9 +34,6 @@ function init() {
       }
     }
   }
-
-  // Use GSAP's ticker instead of requestAnimationFrame for better performance
-  ctx = gsap.ticker.add(move)
 }
 
 function cleanup() {
