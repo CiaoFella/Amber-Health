@@ -1,0 +1,33 @@
+@use './variables.scss';
+
+[anm-navbar='wrap'] {
+  transition: transform 0.5s variables.$power3-out, background-color 0.5s variables.$power3-out, color 0.5s variables.$power3-out, padding 0.5s variables.$power3-out !important;
+
+  [anm-navbar='container'] {
+    transition: padding-top 0.5s variables.$power3-out, padding-bottom 0.5s variables.$power3-out !important;
+  }
+
+  [anm-btn='btn'] {
+    transition: background-color 0.5s variables.$power3-out, color 0.5s variables.$power3-out, border-color 0.5s variables.$power3-out !important;
+  }
+
+  &.is-hidden {
+    transform: translateY(-100%);
+  }
+
+  &.is-scrolled {
+    background-color: var(--swatch--light);
+    color: var(--swatch--dark);
+
+    [anm-navbar='container'] {
+      padding-top: 1.5rem;
+      padding-bottom: 1.5rem;
+    }
+
+    [anm-btn='btn'] {
+      background-color: var(--swatch--dark);
+      color: var(--swatch--light);
+      border-color: var(--swatch--dark);
+    }
+  }
+}

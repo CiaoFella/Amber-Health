@@ -1,89 +1,39 @@
-import { gsap, ScrollTrigger } from '../../vendor.js'
+import { ScrollTrigger } from '../../vendor.js'
 
-let backgroundCtx, navbarCtx
+let scrollTrigger
+let scrollTriggers = []
 
 function init() {
   const navbar = document.querySelector('[anm-navbar=wrap]')
   if (!navbar) return
 
-  const container = navbar.querySelector('[anm-navbar=container]')
-  const cta = navbar.querySelector('[anm-btn]')
+  // Add base class
+  navbar.classList.add('navbar')
 
-  const currentColor = getComputedStyle(navbar).color
-  const currentBackgroundColor = getComputedStyle(navbar).backgroundColor
-
-  const background = 'var(--swatch--light)'
-  const textColor = 'var(--swatch--dark)'
-
-  const backgroundTl = gsap.timeline({
-    defaults: { duration: 0.5, ease: 'power1.inOut' },
-    paused: true,
-  })
-
-  const navbarTl = gsap.timeline({
-    defaults: { duration: 0.5, ease: 'power3.inOut' },
-    paused: true,
-  })
-
-  backgroundTl
-    .to(
-      container,
-      {
-        paddingTop: '1.5rem',
-        paddingBottom: '1.5rem',
-      },
-      0
-    )
-    .fromTo(
-      navbar,
-      {
-        backgroundColor: currentBackgroundColor,
-        color: currentColor,
-      },
-      {
-        backgroundColor: background,
-        color: textColor,
-      },
-      0
-    )
-    .to(cta, { backgroundColor: 'var(--swatch--dark)', color: 'var(--swatch--light)', borderColor: 'var(--swatch--dark)' }, 0)
-
-  navbarTl.to(navbar, {
-    yPercent: -100,
-  })
-
-  backgroundCtx = ScrollTrigger.create({
+  scrollTrigger = ScrollTrigger.create({
     start: 'top+=50 top',
     onUpdate: (self) => {
+      // Handle background/padding changes
       if (self.direction === -1 && self.progress === 0) {
-        backgroundTl.reverse()
-        navbarTl.reverse()
+        navbar.classList.remove('is-scrolled')
       } else if (self.direction === 1 && self.progress > 0) {
-        backgroundTl.play()
-      }
-    },
-  })
-
-  navbarCtx = ScrollTrigger.create({
-    start: 'top+=50 top',
-    onUpdate: (self) => {
-      if (self.progress === 0) {
-        navbarTl.reverse()
-        return
+        navbar.classList.add('is-scrolled')
       }
 
-      if (self.direction === -1) {
-        navbarTl.reverse()
-      } else if (self.direction === 1) {
-        navbarTl.play()
+      // Handle navbar hide/show
+      if (self.direction === 1 && self.progress > 0) {
+        navbar.classList.add('is-hidden')
+      } else if (self.direction === -1) {
+        navbar.classList.remove('is-hidden')
       }
     },
   })
 }
 
 function cleanup() {
-  backgroundCtx && backgroundCtx.revert()
-  navbarCtx && navbarCtx.revert()
+  scrollTrigger && scrollTrigger.revert()
+  scrollTriggers.forEach((cleanup) => cleanup())
+  scrollTriggers = []
 }
 
 export default {
