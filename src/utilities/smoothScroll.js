@@ -25,7 +25,6 @@ export function createSmoothScroll(options = {}) {
   if (locomotiveScroll) {
     locomotiveScroll.destroy()
   }
-
   locomotiveScroll = new LocomotiveScroll({
     lerp,
     wheelMultiplier,
