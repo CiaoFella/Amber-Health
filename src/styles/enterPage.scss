@@ -36,9 +36,8 @@
 }
 
 @for $i from 1 through 20 {
-  // Adjust the number based on how many paths you have
-  .hero_bg_wave path:nth-child(#{$i}) {
-    animation: waveFlow 2s variables.$expo-in-out #{$i * 0.025}s forwards; // 0.1s stagger between each
+  .hero_bg_wave.is-transitioning path:nth-child(#{$i}) {
+    animation: waveFlow 2s variables.$expo-out #{$i * 0.025}s forwards, waveLooping 4s variables.$power3-in-out #{2 + $i * 0.025}s infinite;
   }
 }
 
@@ -50,5 +49,15 @@
   100% {
     transform: translateX(0) translateY(0) scale(1);
     clip-path: variables.$fullclipPath;
+  }
+}
+
+@keyframes waveLooping {
+  0%,
+  100% {
+    transform: translateX(0) translateY(0) scale(1);
+  }
+  50% {
+    transform: translateX(2%) translateY(-1%) scale(1);
   }
 }

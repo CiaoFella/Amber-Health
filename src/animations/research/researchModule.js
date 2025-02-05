@@ -35,7 +35,6 @@ function init() {
       if (!year || !scrollRoller) return
 
       const researchItem = circle.closest('[anm-research=item]')
-      console.log(researchItem)
       if (!researchItem) return
 
       const lastDigit = parseInt(year.slice(-1))

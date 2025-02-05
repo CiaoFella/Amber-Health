@@ -46,7 +46,6 @@ function init() {
         items.forEach((item, index) => {
           const visual = visuals[index]
           const text = item.querySelector('[anm-approach=text]')
-          const headline = item.querySelector('[anm-approach=headline]')
           const sectionHeight = scrollWrap.offsetHeight
           const itemCount = items.length
           const segmentHeight = sectionHeight / itemCount

@@ -1,11 +1,7 @@
 @use './variables.scss';
 
 [anm-navbar='wrap'] {
-  transition: transform 0.5s variables.$power3-out, background-color 0.5s variables.$power3-out, color 0.5s variables.$power3-out, padding 0.5s variables.$power3-out !important;
-
-  [anm-navbar='container'] {
-    transition: padding-top 0.5s variables.$power3-out, padding-bottom 0.5s variables.$power3-out !important;
-  }
+  transition: transform 1s variables.$power3-in-out, background-color 0.5s variables.$power3-in-out, color 0.5s variables.$power3-in-out, padding 0.5s variables.$power3-in-out !important;
 
   [anm-btn='btn'] {
     transition: background-color 0.5s variables.$power3-out, color 0.5s variables.$power3-out, border-color 0.5s variables.$power3-out !important;
@@ -19,15 +15,35 @@
     background-color: var(--swatch--light);
     color: var(--swatch--dark);
 
-    [anm-navbar='container'] {
-      padding-top: 1.5rem;
-      padding-bottom: 1.5rem;
-    }
-
     [anm-btn='btn'] {
       background-color: var(--swatch--dark);
       color: var(--swatch--light);
       border-color: var(--swatch--dark);
+    }
+  }
+
+  [anm-navbar='dropdown'] {
+    display: block;
+    overflow: hidden;
+    clip-path: variables.$topClipPath;
+    transition: max-height 0.5s variables.$power3-out, padding-top 0.5s variables.$power3-out, clip-path 0.5s variables.$power3-out;
+
+    [anm-navbar='dropdown-visual'] > * {
+      scale: 1;
+      transform: rotate(0deg);
+      transition: scale 0.5s variables.$power3-in-out, transform 0.5s variables.$power3-in-out;
+    }
+
+    &.is-open {
+      max-height: 600px;
+      clip-path: variables.$fullclipPath;
+
+      &:hover [anm-navbar='dropdown-item']:hover {
+        [anm-navbar='dropdown-visual'] > * {
+          scale: 1.2;
+          transform: rotate(2.5deg);
+        }
+      }
     }
   }
 }

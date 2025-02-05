@@ -120,7 +120,6 @@ function init() {
         }
 
         if (texts && texts.length > 0) {
-          console.log(texts)
           const distanceAttribute = texts[0].getAttribute('anm-distance') || '5rem'
           const splitAttribute = texts[0].getAttribute('anm-split') || 'lines'
           const charsStaggerAttribute = texts[0].getAttribute('anm-chars-stagger') || 0.01

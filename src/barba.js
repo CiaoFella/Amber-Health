@@ -27,11 +27,9 @@ barba.init({
         const done = this.async()
         const transitionWrap = document.querySelector('[anm-transition=wrap]')
         const transitionLogo = document.querySelector('[anm-transition=logo]')
-        const transitionBrandBg1 = document.querySelector('[anm-transition=brand-bg-1]')
-        const transitionBrandBg2 = document.querySelector('[anm-transition=brand-bg-2]')
         const transitionDarkBg = document.querySelector('[anm-transition=dark-bg]')
 
-        const tl = gsap.timeline({ defaults: { duration: 1.25, ease: 'expo.inOut' } })
+        const tl = gsap.timeline({ defaults: { duration: 1, ease: 'expo.inOut' } })
 
         proxy.pageReady = false
 
@@ -42,11 +40,10 @@ barba.init({
         })
 
         tl.fromTo(
-          [transitionBrandBg1, transitionBrandBg2, transitionDarkBg],
+          transitionDarkBg,
           { clipPath: bottomClipPath },
           {
             clipPath: fullClipPath,
-            stagger: 0.05,
             ease: 'expo.inOut',
             onComplete: () => {
               locomotiveScroll.scrollTo(0, { immediate: true })
@@ -59,8 +56,6 @@ barba.init({
       after(data) {
         const transitionWrap = document.querySelector('[anm-transition=wrap]')
         const transitionLogo = document.querySelector('[anm-transition=logo]')
-        const transitionBrandBg1 = document.querySelector('[anm-transition=brand-bg-1]')
-        const transitionBrandBg2 = document.querySelector('[anm-transition=brand-bg-2]')
         const transitionDarkBg = document.querySelector('[anm-transition=dark-bg]')
 
         mm.add(isDesktop, () => {
@@ -79,13 +74,12 @@ barba.init({
           navbar.classList.remove('is-scrolled', 'is-hidden')
         }
 
-        const tl = gsap.timeline({ defaults: { duration: 1.25, ease: 'expo.inOut', onComplete: () => locomotiveScroll.start() } })
+        const tl = gsap.timeline({ defaults: { duration: 1, ease: 'expo.inOut', onComplete: () => locomotiveScroll.start() } })
 
         tl.to(transitionLogo, { yPercent: -100, duration: 1, ease: 'expo.in' }).to(
-          [transitionBrandBg1, transitionBrandBg2, transitionDarkBg],
+          transitionDarkBg,
           {
             clipPath: topClipPath,
-            stagger: -0.05,
             onComplete: () => {
               gsap.set(transitionWrap, { display: 'none' })
               proxy.pageReady = true

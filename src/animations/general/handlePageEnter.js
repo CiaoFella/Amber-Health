@@ -16,6 +16,7 @@ export default function handlePageEnterAnimation(currentPage) {
     const brandCircle = section.querySelector('.g_brand_circle')
     const circles = section.querySelector('[anm-hero=circles]')
     const cta = section.querySelector('[anm-hero=cta]')
+    const wave = section.querySelector('[anm-hero=wave]')
     const bg = section.querySelector('[anm-hero=bg]')
 
     let trustLogos = null
@@ -25,6 +26,9 @@ export default function handlePageEnterAnimation(currentPage) {
     let ctaChildren = null
     if (cta) {
       ctaChildren = cta.children
+    }
+    if (wave) {
+      wave.classList.add('is-transitioning')
     }
 
     const headlineSplitType = headline.dataset.splitType || 'chars'
