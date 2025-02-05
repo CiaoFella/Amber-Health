@@ -4,11 +4,11 @@
 }
 
 [anm-service-overview='list-wrap'] {
-  > * {
+  [anm-service-overview='headline'] {
     opacity: 0.5;
+  }
 
-    &:first-child {
-      opacity: 1;
-    }
+  [anm-service-overview='headline']:first-of-type {
+    opacity: 1;
   }
 }
