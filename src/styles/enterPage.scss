@@ -2,6 +2,12 @@
 
 [anm-hero='headline'] .char {
   transform: translate(0%, 210%) rotate(10deg);
+  clip-path: variables.$fullclipPath;
+}
+
+[anm-hero='headline'] .line {
+  transform: translate(0%, 110%) rotate(5deg);
+  clip-path: variables.$topClipPath;
 }
 
 [anm-hero='text'] .line {
@@ -15,4 +21,34 @@
 
 [anm-hero='trust-logos'] svg {
   transform: translate(0%, 110%);
+}
+
+[anm-hero='cta'] > * {
+  transform: translate(0%, 120%) rotate(5deg);
+}
+
+// WaveFlow
+
+.hero_bg_wave path {
+  fill: url(#waveGradient);
+  transform-origin: bottom left;
+  clip-path: variables.$leftClipPath;
+}
+
+@for $i from 1 through 20 {
+  // Adjust the number based on how many paths you have
+  .hero_bg_wave path:nth-child(#{$i}) {
+    animation: waveFlow 2s variables.$expo-in-out #{$i * 0.025}s forwards; // 0.1s stagger between each
+  }
+}
+
+@keyframes waveFlow {
+  0% {
+    transform: translateX(-10%) translateY(10%) scale(0.95);
+    clip-path: variables.$leftClipPath;
+  }
+  100% {
+    transform: translateX(0) translateY(0) scale(1);
+    clip-path: variables.$fullclipPath;
+  }
 }

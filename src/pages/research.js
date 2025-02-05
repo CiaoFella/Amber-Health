@@ -1,14 +1,14 @@
+import researchModule from '../animations/research/researchModule.js'
 import shared from '../animations/shared.js'
-import serviceOverview from '../animations/shared/serviceOverview.js'
 
 function init() {
   shared.init()
-  serviceOverview.init()
+  researchModule.init()
 }
 
 function cleanup() {
   shared.cleanup()
-  serviceOverview.cleanup()
+  researchModule.cleanup()
 }
 
 export default {

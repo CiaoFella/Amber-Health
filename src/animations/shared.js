@@ -5,7 +5,7 @@ import bgGradient from './shared/bgGradient.js'
 import buttons from './shared/buttons.js'
 import elementReveal from './shared/elementReveal.js'
 import hero from './shared/hero.js'
-import serviceOverview from './shared/serviceOverview.js'
+
 import textReveal from './shared/textReveal.js'
 
 function init() {
@@ -16,7 +16,6 @@ function init() {
   elementReveal.init()
   buttons.init()
   navBar.init()
-  serviceOverview.init()
   movingGradient.init()
 }
 
@@ -27,7 +26,6 @@ function cleanup() {
   textReveal.cleanup()
   elementReveal.cleanup()
   navBar.cleanup()
-  serviceOverview.cleanup()
   movingGradient.cleanup()
 }
 

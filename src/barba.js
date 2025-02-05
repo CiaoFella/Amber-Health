@@ -4,6 +4,7 @@ import { closeMenu } from './utilities/helper.js'
 import { proxy } from './utilities/pageReadyListener.js'
 import { bottomClipPath, fullClipPath, isDesktop, topClipPath } from './utilities/variables.js'
 import { gsap, barba, ScrollTrigger } from './vendor.js'
+import locomotiveScroll from './utilities/smoothScroll.js'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -26,8 +27,13 @@ barba.init({
         const done = this.async()
         const transitionWrap = document.querySelector('[anm-transition=wrap]')
         const transitionLogo = document.querySelector('[anm-transition=logo]')
+        const transitionBrandBg1 = document.querySelector('[anm-transition=brand-bg-1]')
+        const transitionBrandBg2 = document.querySelector('[anm-transition=brand-bg-2]')
+        const transitionDarkBg = document.querySelector('[anm-transition=dark-bg]')
 
-        const tl = gsap.timeline({ defaults: { duration: 1.5, ease: 'expo.inOut' } })
+        const tl = gsap.timeline({ defaults: { duration: 1.25, ease: 'expo.inOut' } })
+
+        proxy.pageReady = false
 
         tl.set(transitionWrap, {
           display: 'flex',
@@ -35,17 +41,27 @@ barba.init({
           yPercent: 100,
         })
 
-        tl.fromTo(transitionWrap, { clipPath: bottomClipPath }, { clipPath: fullClipPath, ease: 'expo.inOut', onComplete: done }).to(
-          transitionLogo,
-          { yPercent: 0, duration: 1, ease: 'expo.out' },
-          '<+75%'
-        )
-
-        proxy.pageReady = false
+        tl.fromTo(
+          [transitionBrandBg1, transitionBrandBg2, transitionDarkBg],
+          { clipPath: bottomClipPath },
+          {
+            clipPath: fullClipPath,
+            stagger: 0.05,
+            ease: 'expo.inOut',
+            onComplete: () => {
+              locomotiveScroll.scrollTo(0, { immediate: true })
+              locomotiveScroll.stop()
+              done()
+            },
+          }
+        ).to(transitionLogo, { yPercent: 0, duration: 1, ease: 'expo.out' }, '<+75%')
       },
       after(data) {
         const transitionWrap = document.querySelector('[anm-transition=wrap]')
         const transitionLogo = document.querySelector('[anm-transition=logo]')
+        const transitionBrandBg1 = document.querySelector('[anm-transition=brand-bg-1]')
+        const transitionBrandBg2 = document.querySelector('[anm-transition=brand-bg-2]')
+        const transitionDarkBg = document.querySelector('[anm-transition=dark-bg]')
 
         mm.add(isDesktop, () => {
           const customCursor = document.querySelector('.cb-cursor')
@@ -63,18 +79,19 @@ barba.init({
           navbar.classList.remove('is-scrolled', 'is-hidden')
         }
 
-        const tl = gsap.timeline({ defaults: { duration: 1.5, ease: 'expo.inOut' } })
+        const tl = gsap.timeline({ defaults: { duration: 1.25, ease: 'expo.inOut', onComplete: () => locomotiveScroll.start() } })
 
         tl.to(transitionLogo, { yPercent: -100, duration: 1, ease: 'expo.in' }).to(
-          transitionWrap,
+          [transitionBrandBg1, transitionBrandBg2, transitionDarkBg],
           {
             clipPath: topClipPath,
+            stagger: -0.05,
             onComplete: () => {
               gsap.set(transitionWrap, { display: 'none' })
               proxy.pageReady = true
             },
           },
-          '<+25%'
+          '<+50%'
         )
       },
     },

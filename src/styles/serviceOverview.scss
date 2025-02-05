@@ -1,0 +1,14 @@
+[anm-service-overview='bg-wrap'] {
+  > * {
+  }
+}
+
+[anm-service-overview='list-wrap'] {
+  > * {
+    opacity: 0.5;
+
+    &:first-child {
+      opacity: 1;
+    }
+  }
+}

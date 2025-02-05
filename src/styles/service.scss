@@ -1,0 +1,28 @@
+@use './variables.scss';
+
+[anm-offers='list'] {
+  [anm-offers='item'] {
+    &:hover {
+      [anm-offers='circle'] {
+        transform: translateX(0rem);
+        opacity: 1;
+      }
+
+      [anm-offers='text'] {
+        transform: translateX(0rem);
+      }
+    }
+
+    [anm-offers='circle'] {
+      opacity: 0;
+      transform: translateX(-1.5rem);
+      overflow: hidden;
+      transition: transform 0.5s variables.$power3-out, opacity 0.5s variables.$power3-out;
+    }
+
+    [anm-offers='text'] {
+      transform: translateX(-1.5rem);
+      transition: transform 0.5s variables.$power3-out;
+    }
+  }
+}

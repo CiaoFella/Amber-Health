@@ -1,13 +1,14 @@
-import { gsap, ScrollTrigger } from './vendor.js'
+import { gsap, LocomotiveScroll, ScrollTrigger } from './vendor.js'
 import barba from './barba.js'
 import menu from './animations/general/menu.js'
 import pageLoader from './animations/general/pageLoader.js'
 import { getCurrentPage, handleResponsiveElements, updateCurrentNavLink } from './utilities/helper.js'
 import createSplitTypes from './utilities/createSplitTypes.js'
-import lenis from './utilities/smoothScroll.js'
+import lenis, { createSmoothScroll } from './utilities/smoothScroll.js'
 import handlePageEnterAnimation from './animations/general/handlePageEnter.js'
 import { cursor, magneticCursor } from './utilities/customCursor/customCursor.js'
 import { isDesktop } from './utilities/variables.js'
+import { proxy } from './utilities/pageReadyListener.js'
 
 gsap.registerPlugin(ScrollTrigger)
 menu.init()
@@ -60,12 +61,12 @@ mm.add(isDesktop, () => {
   cursor.init()
   magneticCursor()
 })
-
 document.addEventListener('onPageReady', (event) => {
   if (event.detail === true) {
     handlePageEnterAnimation(getCurrentPage()).play()
   }
 })
+proxy.pageReady = true
 
 barba.hooks.beforeEnter(() => {
   createSplitTypes.cleanup()
@@ -77,8 +78,8 @@ barba.hooks.afterEnter(() => {
 
 barba.hooks.after((data) => {
   const pageName = data.next.namespace
-  lenis.scrollTo(0, { duration: 0, immediate: true })
   updateCurrentNavLink()
   loadPageModule(pageName)
   handleResponsiveElements()
+  createSmoothScroll()
 })

@@ -13,7 +13,7 @@ const handler = {
 export let proxy = new Proxy({}, handler)
 Object.defineProperty(proxy, 'pageReady', {
   get: () => pageReady,
-  set: newValue => {
+  set: (newValue) => {
     pageReady = newValue
     return true
   },

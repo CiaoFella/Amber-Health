@@ -19,10 +19,28 @@ mm.add(isDesktop, () => {
   touchMultiplier = 0
 })
 
-const locomotiveScroll = new LocomotiveScroll({
-  lerp: lerp,
-  wheelMultiplier: wheelMultiplier,
-  touchMultiplier: touchMultiplier,
-})
+let locomotiveScroll = null
+
+export function createSmoothScroll(options = {}) {
+  if (locomotiveScroll) {
+    locomotiveScroll.destroy()
+  }
+
+  locomotiveScroll = new LocomotiveScroll({
+    lerp,
+    wheelMultiplier,
+    touchMultiplier,
+    ...options,
+  })
+
+  return locomotiveScroll
+}
+
+export function getSmoothScroll() {
+  return locomotiveScroll
+}
+
+// Create initial locomotiveScroll
+locomotiveScroll = createSmoothScroll()
 
 export default locomotiveScroll
