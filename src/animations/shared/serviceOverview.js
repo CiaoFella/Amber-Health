@@ -39,6 +39,8 @@ function init() {
 
       Array.from(listItems).forEach((item) => {
         item.addEventListener('mouseenter', () => {
+          if (item.contains(firstBrandCircle)) return
+
           const serviceName = item.getAttribute('anm-service-item')
           const itemHeadline = item.querySelector('[anm-service-overview=headline]')
           const matchingBgItem = Array.from(bgItems).find((bg) => bg.getAttribute('anm-service-item') === serviceName)
