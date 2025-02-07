@@ -1,8 +1,42 @@
+@use './variables';
+
 [anm-team-modal='wrap'] {
   display: none;
 }
 
 [anm-team-modal='item'] {
+  [anm-team-modal='text'] {
+    opacity: 0;
+    .line {
+      opacity: 0;
+      transform: translateY(5rem) rotate(5deg);
+      --line-index: 0;
+    }
+  }
+
   &.is-active {
+    [anm-team-modal='text'] {
+      opacity: 1;
+      .line {
+        animation: slideUpFade 1s variables.$expo-out forwards;
+        animation-delay: calc(var(--line-index) * 0.05s);
+      }
+    }
+
+    // Target all lines within paragraphs with a more specific selector
+    [anm-team-modal='text'] div.line {
+      @for $i from 1 through 100 {
+        &:nth-of-type(#{$i}) {
+          animation-delay: #{$i * 0.05}s;
+        }
+      }
+    }
+  }
+}
+
+@keyframes slideUpFade {
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
