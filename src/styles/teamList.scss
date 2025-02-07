@@ -40,3 +40,23 @@
     transform: translateY(0);
   }
 }
+
+[anm-team-modal='arrow'] {
+  transition: transform 0.2s ease-out;
+
+  &[anm-direction='right']:hover {
+    transform: scale(1.1);
+  }
+
+  &[anm-direction='left']:hover {
+    transform: rotate(-180deg) scale(1.1);
+  }
+
+  &[anm-direction='right']:active {
+    transform: scale(0.8);
+  }
+
+  &[anm-direction='left']:active {
+    transform: rotate(-180deg) scale(0.8);
+  }
+}
