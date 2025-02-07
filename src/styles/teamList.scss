@@ -2,6 +2,15 @@
 
 [anm-team-modal='wrap'] {
   display: none;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+
+  &.is-modal-active {
+    display: flex;
+    visibility: visible;
+    opacity: 1;
+  }
 }
 
 [anm-team-modal='item'] {

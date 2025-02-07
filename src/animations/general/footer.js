@@ -4,9 +4,9 @@ let ctx
 
 function init() {
   const section = document.querySelector('[anm-footer=section]')
-  const gradientWrap = section.querySelector('[anm-footer=gradient-wrap]')
 
   if (section) {
+    const gradientWrap = section.querySelector('[anm-footer=gradient-wrap]')
     ctx = gsap.context(() => {
       const wrap = section.querySelector('[anm-footer=wrap]')
       const tagline = section.querySelector('[anm-footer=tagline]').children
@@ -28,24 +28,24 @@ function init() {
         '<+0.25'
       )
     })
-  }
 
-  if (gradientWrap) {
-    const gradientContainer = gradientWrap.querySelector('[anm-footer=gradient-container]')
-    const height = getComputedStyle(gradientContainer).height
-    ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { duration: 3, ease: 'expo.out' } })
+    if (gradientWrap) {
+      const gradientContainer = gradientWrap.querySelector('[anm-footer=gradient-container]')
+      const height = getComputedStyle(gradientContainer).height
+      ctx = gsap.context(() => {
+        const tl = gsap.timeline({ defaults: { duration: 3, ease: 'expo.out' } })
 
-      tl.fromTo(gradientContainer, { height: 0, y: '10%' }, { height: height, y: '-10%' })
+        tl.fromTo(gradientContainer, { height: 0, y: '10%' }, { height: height, y: '-10%' })
 
-      ScrollTrigger.create({
-        trigger: gradientWrap,
-        animation: tl,
-        start: 'top bottom',
-        end: 'top 75%',
-        toggleActions: 'none play none reset',
+        ScrollTrigger.create({
+          trigger: gradientWrap,
+          animation: tl,
+          start: 'top bottom',
+          end: 'top 75%',
+          toggleActions: 'none play none reset',
+        })
       })
-    })
+    }
   }
 }
 

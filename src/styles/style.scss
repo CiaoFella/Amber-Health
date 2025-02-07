@@ -1,3 +1,4 @@
+@use './variables';
 @import './enterPage.scss';
 @import './detail.scss';
 @import './home.scss';
@@ -58,4 +59,12 @@ html.lenis body {
 
 [anm-transition='wrap'] {
   display: none;
+}
+
+.testimonials_list_item:not(.is-service-detail):nth-child(2) {
+  transform: translateY(5rem);
+
+  @media (min-width: variables.$breakpoint-tablet) {
+    transform: translateY(0);
+  }
 }

@@ -12,7 +12,7 @@ function init() {
   ctx = gsap.context(() => {
     const textScrollSections = document.querySelectorAll('[data-scroll-text=section]')
 
-    textScrollSections.forEach(section => {
+    textScrollSections.forEach((section) => {
       const headline = section.querySelectorAll('[data-scroll-text=headline]')
       const text = section.querySelectorAll('[data-scroll-text=text]')
 
@@ -27,7 +27,7 @@ function init() {
       })
 
       if (headline && headline.length > 0) {
-        headline.forEach(item => {
+        headline.forEach((item) => {
           unwrapSpanAndPreserveClasses(item)
           const headlineSplit = new SplitType(item, {
             types: 'lines',
@@ -72,7 +72,7 @@ function init() {
       }
 
       if (text && text.length > 0) {
-        text.forEach(item => {
+        text.forEach((item) => {
           const textDelay = item.dataset.delay || 0
           const textDuration = item.dataset.duration || 1
 
@@ -89,7 +89,7 @@ function init() {
                 y: 0,
                 duration: textDuration,
                 delay: textDelay,
-                stagger: 0.05,
+                stagger: 0.025,
               },
               0
             )
@@ -104,7 +104,7 @@ function init() {
                 y: 0,
                 duration: textDuration,
                 delay: textDelay,
-                stagger: 0.05,
+                stagger: 0.025,
                 ease: 'expo.out',
               },
               0

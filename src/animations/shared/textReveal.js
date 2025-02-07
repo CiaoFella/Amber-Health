@@ -124,7 +124,7 @@ function init() {
           const splitAttribute = texts[0].getAttribute('anm-split') || 'lines'
           const charsStaggerAttribute = texts[0].getAttribute('anm-chars-stagger') || 0.01
           const wordsStaggerAttribute = texts[0].getAttribute('anm-words-stagger') || 0.1
-          const linesStaggerAttribute = texts[0].getAttribute('anm-lines-stagger') || 0.1
+          const linesStaggerAttribute = texts[0].getAttribute('anm-lines-stagger') || 0.05
           const durationAttribute = texts[0].getAttribute('anm-duration') || 1
           const delayAttribute = texts[0].getAttribute('anm-delay') || 0.25
           const easeAttribute = texts[0].getAttribute('anm-ease') || 'expo.out'

@@ -5,8 +5,9 @@ import bgGradient from './shared/bgGradient.js'
 import buttons from './shared/buttons.js'
 import elementReveal from './shared/elementReveal.js'
 import hero from './shared/hero.js'
-
 import textReveal from './shared/textReveal.js'
+import marquee from './general/marquee.js'
+import counter from './shared/counter.js'
 
 function init() {
   hero.init()
@@ -17,6 +18,8 @@ function init() {
   buttons.init()
   navBar.init()
   movingGradient.init()
+  marquee.init()
+  counter.init()
 }
 
 function cleanup() {
@@ -27,6 +30,8 @@ function cleanup() {
   elementReveal.cleanup()
   navBar.cleanup()
   movingGradient.cleanup()
+  marquee.cleanup()
+  counter.cleanup()
 }
 
 export default {
