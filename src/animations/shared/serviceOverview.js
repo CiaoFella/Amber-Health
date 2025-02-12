@@ -17,8 +17,10 @@ function init() {
 
       gsap.set(headlines, { opacity: 0.5 })
       gsap.set(headlines[0], { opacity: 1 })
+      gsap.set(bgItems, { opacity: 0 })
+      gsap.set(bgItems[0], { opacity: 1 })
 
-      scrollTl.fromTo(headlines, { rotate: 10, y: '20rem', clipPath: topClipPath }, { rotate: 0, y: '0rem', clipPath: fullClipPath, stagger: 0.1 })
+      scrollTl.fromTo(headlines, { filter: 'blur(10px)' }, { filter: 'blur(0px)', stagger: 0.1 })
 
       ScrollTrigger.create({
         trigger: section,
@@ -58,6 +60,7 @@ function init() {
             opacity: 0,
             scale: 1.05,
             duration: 0.75,
+            filter: 'blur(10px)',
             ease: 'expo.inOut',
           })
           gsap.to(headlines, {
@@ -70,16 +73,15 @@ function init() {
             matchingBgItem,
             {
               opacity: 0,
-              rotate: 20,
               scale: 1.05,
-              transformOrigin: 'bottom left',
+              filter: 'blur(10px)',
             },
             {
               opacity: 1,
-              rotate: 0,
               scale: 1,
               duration: 1,
               ease: 'expo.inOut',
+              filter: 'blur(0px)',
             }
           )
           gsap.to(itemHeadline, {

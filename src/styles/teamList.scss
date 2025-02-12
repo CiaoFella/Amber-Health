@@ -1,5 +1,18 @@
 @use './variables';
 
+[anm-team-list='item'] {
+  [anm-visual='filter'] {
+    opacity: 1;
+    transition: opacity 0.75s variables.$power3-out;
+  }
+
+  &:hover {
+    [anm-visual='filter'] {
+      opacity: 0;
+    }
+  }
+}
+
 [anm-team-modal='wrap'] {
   display: none;
   visibility: hidden;

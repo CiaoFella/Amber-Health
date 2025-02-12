@@ -10,6 +10,13 @@ function init() {
   const dropdownTrigger = document.querySelector('[anm-navbar=dropdown-trigger]')
   if (!navbar) return
 
+  // Add hero section check and theme setting
+  const heroSection = document.querySelector('[anm-hero=section]')
+  if (heroSection) {
+    const heroBg = heroSection.querySelector('[anm-hero=bg]')
+    navbar.setAttribute('data-theme', heroBg ? 'dark' : 'light')
+  }
+
   if (dropdownTrigger && dropdown) {
     dropdown.querySelectorAll('[anm-navbar=dropdown-item]').forEach((item, index) => {
       item.style.setProperty('--item-index', index)

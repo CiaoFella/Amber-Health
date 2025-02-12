@@ -46,8 +46,6 @@ barba.init({
             clipPath: fullClipPath,
             ease: 'expo.inOut',
             onComplete: () => {
-              locomotiveScroll.scrollTo(0, { immediate: true })
-              locomotiveScroll.stop()
               done()
             },
           }
@@ -80,6 +78,9 @@ barba.init({
           transitionDarkBg,
           {
             clipPath: topClipPath,
+            onStart: () => {
+              window.scrollTo(0, 0)
+            },
             onComplete: () => {
               gsap.set(transitionWrap, { display: 'none' })
               proxy.pageReady = true

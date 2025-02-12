@@ -18,6 +18,7 @@ export default function handlePageEnterAnimation(currentPage) {
     const cta = section.querySelector('[anm-hero=cta]')
     const wave = section.querySelector('[anm-hero=wave]')
     const bg = section.querySelector('[anm-hero=bg]')
+    const trustHeadline = section.querySelector('[anm-hero=trust-headline]')
 
     let trustLogos = null
     if (section.querySelector('[anm-hero=trust-logos]')) {
@@ -34,23 +35,57 @@ export default function handlePageEnterAnimation(currentPage) {
     const headlineSplitType = headline.dataset.splitType || 'chars'
     const textSplitType = text ? text.dataset.splitType || 'lines' : []
 
-    const headlineStagger = headline.getAttribute('anm-stagger') || 0.025
+    const headlineStagger = headline.getAttribute('anm-stagger') || 0.25
     const textStagger = text ? text.getAttribute('anm-stagger') || 0.1 : []
 
-    const headlineSplit = new SplitType(headline, { types: headlineSplitType })
-    const textSplit = new SplitType(text, { types: textSplitType })
+    const headlineSplit = headline.getAttribute('anm-static') === 'true' ? null : new SplitType(headline, { types: [headlineSplitType] })
+
+    const textSplit = text && text.getAttribute('anm-static') === 'true' ? null : text ? new SplitType(text, { types: [textSplitType] }) : null
 
     tl = gsap.timeline({
       defaults: { duration: 1.5, ease: 'expo.out' },
       paused: true,
     })
 
-    tl.to(headlineSplit[headlineSplitType], { y: 0, rotate: 0, clipPath: fullClipPath, stagger: headlineStagger, transformOrigin: 'left bottom' })
-      .to(textSplit[textSplitType], { y: '0rem', rotate: 0, clipPath: fullClipPath, stagger: textStagger }, '<+0.25')
-      .to(cta, { y: '0rem', rotate: 0 }, '<+0.25')
-      .to(brandCircle, { scale: 1, rotate: 0 }, '<+0.25')
-      .to(circles, { x: '0rem', rotate: 0 }, '<+0.25')
-      .to(trustLogos, { yPercent: -110, stagger: 0.1 }, '<+0.25')
+    if (headline.getAttribute('anm-static') !== 'true' && headlineSplit) {
+      tl.to(headlineSplit[headlineSplitType], {
+        opacity: 1,
+        filter: 'blur(0px)',
+        stagger: { amount: headlineStagger, from: 'start' },
+      })
+    }
+
+    if (text && text.getAttribute('anm-static') !== 'true' && textSplit) {
+      tl.to(
+        textSplit[textSplitType],
+        {
+          opacity: 1,
+          filter: 'blur(0px)',
+          stagger: { amount: textStagger, from: 'random' },
+        },
+        '<+0.25'
+      )
+    }
+
+    if (cta && cta.getAttribute('anm-static') !== 'true') {
+      tl.to(cta, { opacity: 1, filter: 'blur(0px)' }, '<+0.25')
+    }
+
+    if (brandCircle && brandCircle.getAttribute('anm-static') !== 'true') {
+      tl.to(brandCircle, { opacity: 1, filter: 'blur(0px)' }, '<+0.25')
+    }
+
+    if (circles && circles.getAttribute('anm-static') !== 'true') {
+      tl.to(circles, { opacity: 0.3, filter: 'blur(0px)' }, '<+0.25')
+    }
+
+    if (trustLogos && section.querySelector('[anm-hero=trust-logos]').getAttribute('anm-static') !== 'true') {
+      tl.to(trustLogos, { opacity: 1, filter: 'blur(0px)', stagger: 0.1 }, '<+0.25')
+    }
+
+    if (trustHeadline && trustHeadline.getAttribute('anm-static') !== 'true') {
+      tl.to(trustHeadline, { opacity: 1, filter: 'blur(0px)' }, '<+0.25')
+    }
   }
 
   return tl

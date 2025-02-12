@@ -105,25 +105,31 @@ function init() {
       toggleActions: 'none play none reset',
     })
 
-    triggers.forEach(function setupTrigger(trigger, index) {
-      trigger.addEventListener('click', function handleTriggerClick() {
-        locomotiveScroll.stop()
+    function openModal(index) {
+      locomotiveScroll.stop()
 
-        modalItems.forEach((item) => item.classList.remove(ITEM_ACTIVE_CLASS))
-        modalItems[index].classList.add(ITEM_ACTIVE_CLASS)
+      modalItems.forEach((item) => item.classList.remove(ITEM_ACTIVE_CLASS))
+      modalItems[index].classList.add(ITEM_ACTIVE_CLASS)
 
-        modalWrap.classList.add(MODAL_ACTIVE_CLASS)
+      modalWrap.classList.add(MODAL_ACTIVE_CLASS)
 
-        const activeText = modalItems[index].querySelector('[anm-team-modal=text]')
-        splitTextIntoLines(activeText)
+      const activeText = modalItems[index].querySelector('[anm-team-modal=text]')
+      splitTextIntoLines(activeText)
 
-        const tl = gsap.timeline()
-        tl.fromTo(modalBg, { opacity: 0 }, { opacity: 1, duration: 0.3 }).fromTo(modalOuter, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.3 }, '-=0.2')
+      const tl = gsap.timeline()
+      tl.fromTo(modalBg, { opacity: 0 }, { opacity: 1, duration: 0.3 }).fromTo(modalOuter, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.3 }, '-=0.2')
 
-        gsap.set(modalList, {
-          x: `${index * -100}%`,
-        })
+      gsap.set(modalList, {
+        x: `${index * -100}%`,
       })
+    }
+
+    triggers.forEach((trigger, index) => {
+      trigger.addEventListener('click', () => openModal(index))
+    })
+
+    teamListItems.forEach((item, index) => {
+      item.addEventListener('click', () => openModal(index))
     })
 
     modalBg.addEventListener('click', closeModal)

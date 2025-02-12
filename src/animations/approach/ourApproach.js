@@ -1,4 +1,5 @@
 import { gsap, ScrollTrigger, SplitType } from '../../vendor.js'
+import locomotiveScroll from '../../utilities/smoothScroll.js'
 
 let ctx
 
@@ -37,7 +38,7 @@ function init() {
             path: indicatorLine,
             align: indicatorLine,
             autoRotate: false,
-            alignOrigin: [0.5, 0],
+            alignOrigin: [0.5, 0.5],
             start: 0,
             end: 1,
           },
@@ -46,9 +47,21 @@ function init() {
         items.forEach((item, index) => {
           const visual = visuals[index]
           const text = item.querySelector('[anm-approach=text]')
+          const headline = item.querySelector('[anm-approach=headline]')
           const sectionHeight = scrollWrap.offsetHeight
           const itemCount = items.length
           const segmentHeight = sectionHeight / itemCount
+
+          if (headline) {
+            headline.parentElement.addEventListener('click', () => {
+              const scrollPosition = segmentHeight * (index + 1)
+
+              locomotiveScroll.scrollTo(scrollWrap, {
+                offset: index === 0 ? -segmentHeight + 0.9999999 * segmentHeight : -segmentHeight + scrollPosition - segmentHeight / 2 + 100,
+                duration: 0.75,
+              })
+            })
+          }
 
           if (index === 0) {
             item.classList.add('is-active')
@@ -63,8 +76,8 @@ function init() {
 
           ScrollTrigger.create({
             trigger: scrollWrap,
-            start: `top-=${segmentHeight - segmentHeight * index} top`,
-            end: `top-=${segmentHeight - segmentHeight * (index + 1)} top`,
+            start: `top-=${segmentHeight - segmentHeight * (index + 1)} center`,
+            end: `top-=${segmentHeight - segmentHeight * (index + 1)} center`,
             onEnter: () => {
               item.classList.add('is-active')
               visual.classList.add('is-active')
@@ -73,19 +86,21 @@ function init() {
                 duration: 1,
                 ease: 'expo.out',
               })
-              if (items[index - 1]) {
+              if (items[index - 1] && index !== 0) {
                 items[index - 1].classList.remove('is-active')
                 visuals[index - 1].classList.remove('is-active')
               }
             },
             onLeaveBack: () => {
-              item.classList.remove('is-active')
-              visual.classList.remove('is-active')
-              gsap.to(roller, {
-                yPercent: -((index - 1) * 20),
-                duration: 1,
-                ease: 'expo.out',
-              })
+              if (index !== 0) {
+                item.classList.remove('is-active')
+                visual.classList.remove('is-active')
+                gsap.to(roller, {
+                  yPercent: -((index - 1) * 20),
+                  duration: 1,
+                  ease: 'expo.out',
+                })
+              }
               if (items[index - 1]) {
                 items[index - 1].classList.add('is-active')
                 visuals[index - 1].classList.add('is-active')

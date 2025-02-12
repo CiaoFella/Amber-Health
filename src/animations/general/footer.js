@@ -23,8 +23,8 @@ function init() {
 
       tl.fromTo(wrap, { y: '5rem', scale: 1.1 }, { y: 0, scale: 1 }).fromTo(
         tagline,
-        { yPercent: 110, rotate: 10 },
-        { yPercent: 0, stagger: -0.025, rotate: 0, ease: 'expo.out' },
+        { opacity: 0, filter: 'blur(10px)' },
+        { opacity: 1, filter: 'blur(0px)', stagger: { amount: 0.25, from: 'random' }, rotate: 0, ease: 'expo.out' },
         '<+0.25'
       )
     })

@@ -39,7 +39,7 @@ function init() {
           const custom = element.getAttribute('anm-custom')
           const ease = element.getAttribute('anm-ease') || 'expo.out'
           const delay = element.getAttribute('anm-delay') || 0
-          const type = element.getAttribute('anm-type') || 'slide'
+          const type = element.getAttribute('anm-type') || 'opacity'
           const direction = element.getAttribute('anm-direction') || 'bottom'
 
           const parseCustomAttribute = (attr) => {
@@ -85,56 +85,26 @@ function init() {
             case 'clip':
               switch (direction) {
                 case 'top':
-                  tl.fromTo(
-                    element,
-                    { clipPath: bottomClipPath, ...animationProps },
-                    { clipPath: fullClipPath, duration: duration, ease: ease, delay: delay, ...toStateProps },
-                    0
-                  )
+                  tl.fromTo(element, { clipPath: bottomClipPath, ...animationProps }, { clipPath: fullClipPath, duration: duration, ease: ease, delay: delay, ...toStateProps }, 0)
                   break
                 case 'bottom':
-                  tl.fromTo(
-                    element,
-                    { clipPath: topClipPath, ...animationProps },
-                    { clipPath: fullClipPath, duration: duration, ease: ease, delay: delay, ...toStateProps },
-                    0
-                  )
+                  tl.fromTo(element, { clipPath: topClipPath, ...animationProps }, { clipPath: fullClipPath, duration: duration, ease: ease, delay: delay, ...toStateProps }, 0)
                   break
                 case 'left':
-                  tl.fromTo(
-                    element,
-                    { clipPath: rightClipPath, ...animationProps },
-                    { clipPath: fullClipPath, duration: duration, ease: ease, delay: delay, ...toStateProps },
-                    0
-                  )
+                  tl.fromTo(element, { clipPath: rightClipPath, ...animationProps }, { clipPath: fullClipPath, duration: duration, ease: ease, delay: delay, ...toStateProps }, 0)
                   break
                 case 'right':
-                  tl.fromTo(
-                    element,
-                    { clipPath: leftClipPath, ...animationProps },
-                    { clipPath: fullClipPath, duration: duration, ease: ease, delay: delay, ...toStateProps },
-                    0
-                  )
+                  tl.fromTo(element, { clipPath: leftClipPath, ...animationProps }, { clipPath: fullClipPath, duration: duration, ease: ease, delay: delay, ...toStateProps }, 0)
                   break
                 case 'center':
-                  tl.fromTo(
-                    element,
-                    { clipPath: centerClipPath, ...animationProps },
-                    { clipPath: fullClipPath, duration: duration, ease: ease, delay: delay, ...toStateProps },
-                    0
-                  )
+                  tl.fromTo(element, { clipPath: centerClipPath, ...animationProps }, { clipPath: fullClipPath, duration: duration, ease: ease, delay: delay, ...toStateProps }, 0)
                   break
                 case 'custom-clip':
                   {
                     const clipPathStart = element.getAttribute('anm-clip-path-start') || centerClipPath
                     const clipPathEnd = element.getAttribute('anm-clip-path-end') || fullClipPath
 
-                    tl.fromTo(
-                      element,
-                      { clipPath: clipPathStart, ...animationProps },
-                      { clipPath: clipPathEnd, duration: duration, ease: ease, delay: delay, ...toStateProps },
-                      0
-                    )
+                    tl.fromTo(element, { clipPath: clipPathStart, ...animationProps }, { clipPath: clipPathEnd, duration: duration, ease: ease, delay: delay, ...toStateProps }, 0)
                   }
                   break
               }
@@ -158,36 +128,16 @@ function init() {
                   tl.fromTo(element, { x: distance, ...animationProps }, { x: 0, duration: duration, ease: ease, delay: delay, ...toStateProps }, 0)
                   break
                 case 'top left':
-                  tl.fromTo(
-                    element,
-                    { x: -distance, y: -distance, ...animationProps },
-                    { x: 0, y: 0, duration: duration, ease: ease, delay: delay, ...toStateProps },
-                    0
-                  )
+                  tl.fromTo(element, { x: -distance, y: -distance, ...animationProps }, { x: 0, y: 0, duration: duration, ease: ease, delay: delay, ...toStateProps }, 0)
                   break
                 case 'top right':
-                  tl.fromTo(
-                    element,
-                    { x: distance, y: -distance, ...animationProps },
-                    { x: 0, y: 0, duration: duration, ease: ease, delay: delay, ...toStateProps },
-                    0
-                  )
+                  tl.fromTo(element, { x: distance, y: -distance, ...animationProps }, { x: 0, y: 0, duration: duration, ease: ease, delay: delay, ...toStateProps }, 0)
                   break
                 case 'bottom right':
-                  tl.fromTo(
-                    element,
-                    { x: distance, y: distance, ...animationProps },
-                    { x: 0, y: 0, duration: duration, ease: ease, delay: delay, ...toStateProps },
-                    0
-                  )
+                  tl.fromTo(element, { x: distance, y: distance, ...animationProps }, { x: 0, y: 0, duration: duration, ease: ease, delay: delay, ...toStateProps }, 0)
                   break
                 case 'bottom left':
-                  tl.fromTo(
-                    element,
-                    { x: -distance, y: distance, ...animationProps },
-                    { x: 0, y: 0, duration: duration, ease: ease, delay: delay, ...toStateProps },
-                    0
-                  )
+                  tl.fromTo(element, { x: -distance, y: distance, ...animationProps }, { x: 0, y: 0, duration: duration, ease: ease, delay: delay, ...toStateProps }, 0)
                   break
               }
               break
@@ -199,20 +149,10 @@ function init() {
               const rotate = parseFloat(element.getAttribute('anm-rotate')) || 15
               switch (direction) {
                 case 'in':
-                  tl.fromTo(
-                    element,
-                    { rotate: -rotate, ...animationProps },
-                    { rotate: 0, duration: duration, ease: ease, delay: delay, ...toStateProps },
-                    0
-                  )
+                  tl.fromTo(element, { rotate: -rotate, ...animationProps }, { rotate: 0, duration: duration, ease: ease, delay: delay, ...toStateProps }, 0)
                   break
                 case 'out':
-                  tl.fromTo(
-                    element,
-                    { rotate: rotate, ...animationProps },
-                    { rotate: 0, duration: duration, ease: ease, delay: delay, ...toStateProps },
-                    0
-                  )
+                  tl.fromTo(element, { rotate: rotate, ...animationProps }, { rotate: 0, duration: duration, ease: ease, delay: delay, ...toStateProps }, 0)
                   break
               }
               break

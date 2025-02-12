@@ -39,15 +39,15 @@ function init() {
 
         if (headlines && headlines.length > 0) {
           headlines.forEach((headline) => {
-            const distanceAttribute = headline.getAttribute('anm-distance') || '220%'
+            const distanceAttribute = headline.getAttribute('anm-distance') || '0%'
             const splitAttribute = headline.getAttribute('anm-split') || 'lines'
             const charsStaggerAttribute = headline.getAttribute('anm-chars-stagger') || 0.01
             const wordsStaggerAttribute = headline.getAttribute('anm-words-stagger') || 0.1
             const linesStaggerAttribute = headline.getAttribute('anm-lines-stagger') || 0.1
-            const durationAttribute = headline.getAttribute('anm-duration') || 1.2
+            const durationAttribute = headline.getAttribute('anm-duration') || 2
             const delayAttribute = headline.getAttribute('anm-delay') || 0
             const easeAttribute = headline.getAttribute('anm-ease') || 'expo.out'
-            const customAttribute = headline.getAttribute('anm-custom') || 'rotate: 10'
+            const customAttribute = headline.getAttribute('anm-custom') || 'filter: blur(5px), opacity: 0'
 
             const parseCustomAttribute = (attr) => {
               const props = {}
@@ -96,7 +96,7 @@ function init() {
                     y: yPosition,
                     stagger: splitElements.length ? stagger : 0,
                     delay: delayAttribute ? parseFloat(delayAttribute) : 0,
-                    duration: durationAttribute ? parseFloat(durationAttribute) : 1,
+                    duration: durationAttribute ? parseFloat(durationAttribute) : 2,
                     ease: easeAttribute ? easeAttribute : 'expo.out',
                     ...animationProps,
                   },
@@ -109,7 +109,7 @@ function init() {
                 {
                   y: distanceAttribute,
                   delay: delayAttribute ? parseFloat(delayAttribute) : 0,
-                  duration: durationAttribute ? parseFloat(durationAttribute) : 1,
+                  duration: durationAttribute ? parseFloat(durationAttribute) : 2,
                   ease: easeAttribute ? easeAttribute : 'expo.out',
                   ...animationProps,
                 },
@@ -120,15 +120,15 @@ function init() {
         }
 
         if (texts && texts.length > 0) {
-          const distanceAttribute = texts[0].getAttribute('anm-distance') || '5rem'
+          const distanceAttribute = texts[0].getAttribute('anm-distance') || '0rem'
           const splitAttribute = texts[0].getAttribute('anm-split') || 'lines'
           const charsStaggerAttribute = texts[0].getAttribute('anm-chars-stagger') || 0.01
           const wordsStaggerAttribute = texts[0].getAttribute('anm-words-stagger') || 0.1
-          const linesStaggerAttribute = texts[0].getAttribute('anm-lines-stagger') || 0.05
-          const durationAttribute = texts[0].getAttribute('anm-duration') || 1
+          const linesStaggerAttribute = texts[0].getAttribute('anm-lines-stagger') || 0.1
+          const durationAttribute = texts[0].getAttribute('anm-duration') || 2
           const delayAttribute = texts[0].getAttribute('anm-delay') || 0.25
           const easeAttribute = texts[0].getAttribute('anm-ease') || 'expo.out'
-          const customAttribute = texts[0].getAttribute('anm-custom') || 'rotate: 5'
+          const customAttribute = texts[0].getAttribute('anm-custom') || 'filter: blur(5px), opacity: 0'
 
           const parseCustomAttribute = (attr) => {
             const props = {}
@@ -213,15 +213,15 @@ function init() {
               tl.fromTo(
                 allSplitElements,
                 {
-                  clipPath: topClipPath,
+                  // clipPath: topClipPath,
                   y: yPosition,
                   ...animationProps,
                 },
                 {
-                  clipPath: fullClipPath,
+                  // clipPath: fullClipPath,
                   y: 0,
                   stagger: stagger,
-                  duration: durationAttribute ? parseFloat(durationAttribute) : 1,
+                  duration: durationAttribute ? parseFloat(durationAttribute) : 2,
                   delay: delayAttribute ? parseFloat(delayAttribute) : 0,
                   ease: easeAttribute ? easeAttribute : 'expo.out',
                   ...toStateProps,
@@ -239,7 +239,7 @@ function init() {
               {
                 yPercent: 0,
                 duration: parseFloat(durationAttribute),
-                delay: delayAttribute ? parseFloat(delayAttribute) : 0,
+                delay: delayAttribute ? parseFloat(delayAttribute) : 2,
                 ease: easeAttribute ? easeAttribute : 'expo.out',
                 ...toStateProps,
               },
