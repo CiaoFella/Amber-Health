@@ -10,6 +10,16 @@
 @import './service.scss';
 @import './serviceOverview.scss';
 @import './teamList.scss';
+@import './preloader.scss';
+
+.footer_nav_link,
+.navbar_menu_link {
+  transition: letter-spacing 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+
+  &:hover {
+    letter-spacing: 0.05em;
+  }
+}
 
 .is-animating {
   position: fixed;

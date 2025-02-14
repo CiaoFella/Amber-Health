@@ -161,15 +161,15 @@
     }
   }
 
-  .moving_gradient_interactive {
-    position: absolute;
-    background: radial-gradient(circle at center, variables.$color-interactive 0, rgba(140, 100, 255, 0) 50%) no-repeat;
-    mix-blend-mode: variables.$blending;
+  // .moving_gradient_interactive {
+  //   position: absolute;
+  //   background: radial-gradient(circle at center, variables.$color-interactive 0, rgba(140, 100, 255, 0) 50%) no-repeat;
+  //   mix-blend-mode: variables.$blending;
 
-    width: variables.$circle-size;
-    height: variables.$circle-size;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-    opacity: 0.75;
-  }
+  //   width: variables.$circle-size;
+  //   height: variables.$circle-size;
+  //   transform: translate(-50%, -50%);
+  //   pointer-events: none;
+  //   opacity: 0.75;
+  // }
 }

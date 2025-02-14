@@ -1,7 +1,7 @@
 import { gsap, LocomotiveScroll, ScrollTrigger } from './vendor.js'
 import barba from './barba.js'
 import menu from './animations/general/menu.js'
-import pageLoader from './animations/general/pageLoader.js'
+import preloader from './animations/general/preloader.js'
 import { getCurrentPage, handleResponsiveElements, updateCurrentNavLink } from './utilities/helper.js'
 import createSplitTypes from './utilities/createSplitTypes.js'
 import lenis, { createSmoothScroll } from './utilities/smoothScroll.js'
@@ -9,6 +9,7 @@ import handlePageEnterAnimation from './animations/general/handlePageEnter.js'
 import { cursor, magneticCursor } from './utilities/customCursor/customCursor.js'
 import { isDesktop } from './utilities/variables.js'
 import { proxy } from './utilities/pageReadyListener.js'
+import locomotiveScroll from './utilities/smoothScroll.js'
 
 gsap.registerPlugin(ScrollTrigger)
 menu.init()
@@ -55,7 +56,7 @@ function loadPageModule(pageName) {
 const initialPageName = document.querySelector('[data-barba="container"]').dataset.barbaNamespace
 createSplitTypes.init()
 loadPageModule(initialPageName)
-pageLoader.init(initialPageName)
+preloader.init(initialPageName)
 handleResponsiveElements()
 mm.add(isDesktop, () => {
   cursor.init()
@@ -66,7 +67,9 @@ document.addEventListener('onPageReady', (event) => {
     handlePageEnterAnimation(getCurrentPage()).play()
   }
 })
-proxy.pageReady = true
+window.onbeforeunload = function () {
+  locomotiveScroll.scrollTo(0, { immediate: true })
+}
 
 barba.hooks.beforeEnter(() => {
   createSplitTypes.cleanup()

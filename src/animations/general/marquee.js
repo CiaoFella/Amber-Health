@@ -7,7 +7,6 @@ function init() {
   const marqueeItems = document.querySelectorAll('[data-marquee-scroll-direction-target]')
 
   if (marqueeItems.length === 0) return
-  console.log(marqueeItems)
 
   marqueeItems.forEach((marquee) => {
     const marqueeContent = marquee.querySelector('[data-marquee-collection-target]')

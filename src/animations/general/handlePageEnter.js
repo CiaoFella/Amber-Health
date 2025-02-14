@@ -12,7 +12,7 @@ export default function handlePageEnterAnimation(currentPage) {
   let tl = null
   if (section) {
     const headline = section.querySelector('[anm-hero=headline]')
-    const text = section.querySelector('[anm-hero=text]')
+    const texts = section.querySelectorAll('[anm-hero=text]')
     const brandCircle = section.querySelector('.g_brand_circle')
     const circles = section.querySelector('[anm-hero=circles]')
     const cta = section.querySelector('[anm-hero=cta]')
@@ -32,15 +32,27 @@ export default function handlePageEnterAnimation(currentPage) {
       wave.classList.add('is-transitioning')
     }
 
-    const headlineSplitType = headline.dataset.splitType || 'chars'
-    const textSplitType = text ? text.dataset.splitType || 'lines' : []
+    const headlineSplitType = headline.dataset.splitType || 'chars, words'
+    let textSplits = []
+    let textSplitTypes = []
+
+    texts.forEach((text) => {
+      const textSplitType = text.dataset.splitType || 'lines'
+      const textStagger = text.getAttribute('anm-stagger') || 0.1
+      const textSplit = text.getAttribute('anm-static') === 'true' ? null : new SplitType(text, { types: [textSplitType] })
+
+      if (textSplit) {
+        textSplits.push({
+          split: textSplit,
+          type: textSplitType,
+          stagger: textStagger,
+        })
+      }
+    })
 
     const headlineStagger = headline.getAttribute('anm-stagger') || 0.25
-    const textStagger = text ? text.getAttribute('anm-stagger') || 0.1 : []
 
     const headlineSplit = headline.getAttribute('anm-static') === 'true' ? null : new SplitType(headline, { types: [headlineSplitType] })
-
-    const textSplit = text && text.getAttribute('anm-static') === 'true' ? null : text ? new SplitType(text, { types: [textSplitType] }) : null
 
     tl = gsap.timeline({
       defaults: { duration: 1.5, ease: 'expo.out' },
@@ -55,16 +67,20 @@ export default function handlePageEnterAnimation(currentPage) {
       })
     }
 
-    if (text && text.getAttribute('anm-static') !== 'true' && textSplit) {
-      tl.to(
-        textSplit[textSplitType],
-        {
-          opacity: 1,
-          filter: 'blur(0px)',
-          stagger: { amount: textStagger, from: 'random' },
-        },
-        '<+0.25'
-      )
+    if (texts.length > 0) {
+      textSplits.forEach(({ split, type, stagger }) => {
+        if (split) {
+          tl.to(
+            split[type],
+            {
+              opacity: 1,
+              filter: 'blur(0px)',
+              stagger: { amount: stagger, from: 'random' },
+            },
+            '<+0.25'
+          )
+        }
+      })
     }
 
     if (cta && cta.getAttribute('anm-static') !== 'true') {

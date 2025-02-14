@@ -39,25 +39,23 @@
 
 // WaveFlow
 
-.hero_bg_wave path {
-  fill: url(#waveGradient);
-  transform-origin: bottom left;
+[anm-hero='wave'] {
   clip-path: variables.$leftClipPath;
+  animation: waveFlow 2s variables.$expo-out 2s forwards, waveLooping 4s variables.$power3-in-out 3s infinite;
 }
 
-@for $i from 1 through 20 {
-  .hero_bg_wave.is-transitioning path:nth-child(#{$i}) {
-    animation: waveFlow 2s variables.$expo-out #{$i * 0.025}s forwards, waveLooping 4s variables.$power3-in-out #{2 + $i * 0.025}s infinite;
-  }
+[anm-hero='wave'] path {
+  fill: url(#waveGradient);
+  transform-origin: bottom left;
 }
 
 @keyframes waveFlow {
   0% {
-    transform: translateX(-10%) translateY(10%) scale(0.95);
+    transform: translateX(-10%) translateY(10%) scale(1.1) rotate(-15deg);
     clip-path: variables.$leftClipPath;
   }
   100% {
-    transform: translateX(0) translateY(0) scale(1);
+    transform: translateX(0) translateY(0) scale(1.1) rotate(-15deg);
     clip-path: variables.$fullclipPath;
   }
 }
@@ -65,10 +63,10 @@
 @keyframes waveLooping {
   0%,
   100% {
-    transform: translateX(0) translateY(0) scale(1);
+    transform: translateX(0) translateY(0) scale(1.1) rotate(-15deg);
   }
   50% {
-    transform: translateX(2%) translateY(-1%) scale(1);
+    transform: translateX(2%) translateY(-1%) scale(1.1) rotate(-15deg);
   }
 }
 

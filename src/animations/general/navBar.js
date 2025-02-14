@@ -8,9 +8,10 @@ function init() {
   const navbar = document.querySelector('[anm-navbar=wrap]')
   const dropdown = document.querySelector('[anm-navbar=dropdown]')
   const dropdownTrigger = document.querySelector('[anm-navbar=dropdown-trigger]')
+  const menuTrigger = document.querySelector('[anm-navbar=menu-trigger]')
+  const flyoutWrap = document.querySelector('[anm-flyout=wrap]')
   if (!navbar) return
 
-  // Add hero section check and theme setting
   const heroSection = document.querySelector('[anm-hero=section]')
   if (heroSection) {
     const heroBg = heroSection.querySelector('[anm-hero=bg]')
@@ -55,6 +56,39 @@ function init() {
           }
         }
       }, 100)
+    })
+  }
+
+  // Add click handler for mobile menu
+  if (menuTrigger && flyoutWrap) {
+    const menuItems = flyoutWrap.querySelectorAll('[anm-flyout="menu"] > *')
+
+    menuTrigger.addEventListener('click', () => {
+      if (flyoutWrap.classList.contains('is-active')) {
+        // Menu is being closed
+        menuTrigger.classList.remove('is-active')
+        flyoutWrap.classList.remove('is-active')
+      } else {
+        // Menu is being opened
+        menuTrigger.classList.add('is-active')
+        flyoutWrap.classList.add('is-active')
+
+        gsap.fromTo(
+          menuItems,
+          {
+            opacity: 0,
+            y: '2rem',
+          },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+            ease: 'power3.out',
+            stagger: 0.1,
+            delay: 0.25,
+          }
+        )
+      }
     })
   }
 

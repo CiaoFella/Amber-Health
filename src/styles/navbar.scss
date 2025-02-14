@@ -47,3 +47,42 @@
     }
   }
 }
+
+[anm-flyout='wrap'] {
+  display: flex;
+  visibility: hidden;
+  transition: visibility 1s variables.$expo-in-out !important;
+
+  [anm-flyout='inner'] {
+    clip-path: variables.$topClipPath;
+    transition: clip-path 1s variables.$expo-in-out !important;
+  }
+
+  [anm-flyout='overlay'] {
+    opacity: 0;
+    transition: opacity 1s variables.$expo-in-out;
+  }
+
+  &.is-active {
+    visibility: visible;
+
+    [anm-flyout='inner'] {
+      clip-path: variables.$fullclipPath;
+    }
+
+    [anm-flyout='overlay'] {
+      opacity: 1;
+    }
+  }
+}
+
+@keyframes menuItemEnter {
+  from {
+    opacity: 0;
+    transform: translateY(2rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -27,7 +27,7 @@ function init() {
         toggleActions: 'none play none none',
       })
 
-      tl.from(content.children, { opacity: 0, rotate: 5, y: '10rem', stagger: 0.1, delay: 0.25 })
+      tl.from(content.children, { opacity: 0, filter: 'blur(10px)', stagger: 0.1, delay: 0.25 })
     })
 
     circles.forEach((circle) => {

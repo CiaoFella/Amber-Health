@@ -17,7 +17,6 @@ function init() {
   elementReveal.init()
   buttons.init()
   navBar.init()
-  movingGradient.init()
   marquee.init()
   counter.init()
 }
@@ -29,7 +28,6 @@ function cleanup() {
   textReveal.cleanup()
   elementReveal.cleanup()
   navBar.cleanup()
-  movingGradient.cleanup()
   marquee.cleanup()
   counter.cleanup()
 }
