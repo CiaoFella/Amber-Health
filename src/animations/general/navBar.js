@@ -3,6 +3,8 @@ import { fullClipPath, topClipPath } from '../../utilities/variables.js'
 
 let scrollTrigger
 let scrollTriggers = []
+let menuItems = null
+let menuTriggerListener = null
 
 function init() {
   const navbar = document.querySelector('[anm-navbar=wrap]')
@@ -11,6 +13,9 @@ function init() {
   const menuTrigger = document.querySelector('[anm-navbar=menu-trigger]')
   const flyoutWrap = document.querySelector('[anm-flyout=wrap]')
   if (!navbar) return
+
+  // Reset menuItems reference
+  menuItems = null
 
   const heroSection = document.querySelector('[anm-hero=section]')
   if (heroSection) {
@@ -59,37 +64,18 @@ function init() {
     })
   }
 
-  // Add click handler for mobile menu
   if (menuTrigger && flyoutWrap) {
-    const menuItems = flyoutWrap.querySelectorAll('[anm-flyout="menu"] > *')
+    // Update menuItems reference
+    menuItems = flyoutWrap.querySelectorAll('[anm-flyout="menu"] > *')
 
-    menuTrigger.addEventListener('click', () => {
-      if (flyoutWrap.classList.contains('is-active')) {
-        // Menu is being closed
-        menuTrigger.classList.remove('is-active')
-        flyoutWrap.classList.remove('is-active')
-      } else {
-        // Menu is being opened
-        menuTrigger.classList.add('is-active')
-        flyoutWrap.classList.add('is-active')
+    // Remove old listener if it exists
+    if (menuTriggerListener) {
+      menuTrigger.removeEventListener('click', menuTriggerListener)
+    }
 
-        gsap.fromTo(
-          menuItems,
-          {
-            opacity: 0,
-            y: '2rem',
-          },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.5,
-            ease: 'power3.out',
-            stagger: 0.1,
-            delay: 0.25,
-          }
-        )
-      }
-    })
+    // Create and store new listener
+    menuTriggerListener = () => toggleFlyout()
+    menuTrigger.addEventListener('click', menuTriggerListener)
   }
 
   scrollTrigger = ScrollTrigger.create({
@@ -111,13 +97,72 @@ function init() {
   })
 }
 
+function toggleFlyout(forceState) {
+  const flyoutWrap = document.querySelector('[anm-flyout=wrap]')
+  const menuTrigger = document.querySelector('[anm-navbar=menu-trigger]')
+  const menuRoller = document.querySelector('[anm-navbar=menu-roller]')
+  const navbar = document.querySelector('[anm-navbar=wrap]')
+  if (!flyoutWrap || !menuTrigger) return
+
+  // Get fresh reference to menuItems if not already set
+  if (!menuItems) {
+    menuItems = flyoutWrap.querySelectorAll('[anm-flyout="menu"] > *')
+  }
+
+  const shouldOpen = forceState !== undefined ? forceState : !flyoutWrap.classList.contains('is-active')
+
+  if (shouldOpen) {
+    menuTrigger.classList.add('is-active')
+    menuRoller.classList.add('is-active')
+    flyoutWrap.classList.add('is-active')
+    navbar.setAttribute('data-theme', 'light')
+
+    gsap.fromTo(
+      menuItems,
+      {
+        opacity: 0,
+        y: '2rem',
+      },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        ease: 'power3.out',
+        stagger: 0.1,
+        delay: 0.25,
+      }
+    )
+  } else {
+    menuTrigger.classList.remove('is-active')
+    menuRoller.classList.remove('is-active')
+    flyoutWrap.classList.remove('is-active')
+
+    // Restore original theme based on hero section
+    const heroSection = document.querySelector('[anm-hero=section]')
+    if (heroSection) {
+      const heroBg = heroSection.querySelector('[anm-hero=bg]')
+      navbar.setAttribute('data-theme', heroBg ? 'dark' : 'light')
+    }
+  }
+}
+
 function cleanup() {
   scrollTrigger && scrollTrigger.revert()
   scrollTriggers.forEach((cleanup) => cleanup())
   scrollTriggers = []
+
+  // Clean up menu trigger listener
+  const menuTrigger = document.querySelector('[anm-navbar=menu-trigger]')
+  if (menuTrigger && menuTriggerListener) {
+    menuTrigger.removeEventListener('click', menuTriggerListener)
+    menuTriggerListener = null
+  }
+
+  menuItems = null
 }
 
 export default {
   init,
   cleanup,
+  toggleFlyout,
 }

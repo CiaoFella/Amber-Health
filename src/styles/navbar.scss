@@ -49,13 +49,15 @@
 }
 
 [anm-flyout='wrap'] {
-  display: flex;
+  display: grid;
   visibility: hidden;
-  transition: visibility 1s variables.$expo-in-out !important;
+  grid-template-rows: 0fr;
+  transition: visibility 1s variables.$expo-in-out, grid-template-rows 1s variables.$expo-in-out !important;
 
   [anm-flyout='inner'] {
     clip-path: variables.$topClipPath;
     transition: clip-path 1s variables.$expo-in-out !important;
+    overflow: hidden;
   }
 
   [anm-flyout='overlay'] {
@@ -65,6 +67,7 @@
 
   &.is-active {
     visibility: visible;
+    grid-template-rows: 1fr;
 
     [anm-flyout='inner'] {
       clip-path: variables.$fullclipPath;
@@ -84,5 +87,14 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+[anm-navbar='menu-roller'] {
+  transform: translateY(0);
+  transition: transform 0.5s variables.$power3-out;
+
+  &.is-active {
+    transform: translateY(-1.1em);
   }
 }

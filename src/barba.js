@@ -5,6 +5,7 @@ import { proxy } from './utilities/pageReadyListener.js'
 import { bottomClipPath, fullClipPath, isDesktop, topClipPath } from './utilities/variables.js'
 import { gsap, barba, ScrollTrigger } from './vendor.js'
 import locomotiveScroll from './utilities/smoothScroll.js'
+import navBar from './animations/general/navBar.js'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -38,6 +39,8 @@ barba.init({
         }).set(transitionLogo, {
           yPercent: 100,
         })
+
+        navBar.toggleFlyout(false)
 
         tl.fromTo(
           transitionDarkBg,

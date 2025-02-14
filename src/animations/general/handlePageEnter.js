@@ -52,7 +52,7 @@ export default function handlePageEnterAnimation(currentPage) {
 
     const headlineStagger = headline.getAttribute('anm-stagger') || 0.25
 
-    const headlineSplit = headline.getAttribute('anm-static') === 'true' ? null : new SplitType(headline, { types: [headlineSplitType] })
+    const headlineSplit = headline.getAttribute('anm-static') === 'true' ? null : new SplitType(headline, { types: headlineSplitType.split(', ') })
 
     tl = gsap.timeline({
       defaults: { duration: 1.5, ease: 'expo.out' },
@@ -60,10 +60,19 @@ export default function handlePageEnterAnimation(currentPage) {
     })
 
     if (headline.getAttribute('anm-static') !== 'true' && headlineSplit) {
-      tl.to(headlineSplit[headlineSplitType], {
-        opacity: 1,
-        filter: 'blur(0px)',
-        stagger: { amount: headlineStagger, from: 'start' },
+      const splitTypes = headlineSplitType.split(', ')
+      splitTypes.forEach((type) => {
+        if (headlineSplit[type]) {
+          tl.to(
+            headlineSplit[type],
+            {
+              opacity: 1,
+              filter: 'blur(0px)',
+              stagger: { amount: headlineStagger, from: 'random' },
+            },
+            '<'
+          )
+        }
       })
     }
 
