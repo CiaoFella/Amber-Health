@@ -68,8 +68,13 @@ document.addEventListener('onPageReady', (event) => {
   }
 })
 window.onbeforeunload = function () {
+  locomotiveScroll.start()
   locomotiveScroll.scrollTo(0, { immediate: true })
 }
+
+barba.hooks.enter(() => {
+  window.scrollTo(0, 0)
+})
 
 barba.hooks.beforeEnter(() => {
   createSplitTypes.cleanup()

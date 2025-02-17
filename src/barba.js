@@ -82,7 +82,7 @@ barba.init({
           {
             clipPath: topClipPath,
             onStart: () => {
-              window.scrollTo(0, 0)
+              ScrollTrigger.refresh()
             },
             onComplete: () => {
               gsap.set(transitionWrap, { display: 'none' })
