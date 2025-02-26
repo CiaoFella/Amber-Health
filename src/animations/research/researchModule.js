@@ -8,9 +8,13 @@ function init() {
   if (!section) return
 
   const scrollCircle = section.querySelector('[anm-research=scroll-circle]')
-  const scrollRoller = section.querySelector('[anm-research=year-roller]')
+  const scrollRollerDecade = section.querySelector('[anm-research=decade-roller]')
+  const scrollRollerYear = section.querySelector('[anm-research=year-roller]')
   const circles = section.querySelectorAll('[anm-research=circle]')
   const researchItems = section.querySelectorAll('[anm-research=item]')
+
+  updateYear(9)
+  updateDecade(1)
 
   ctx = gsap.context(() => {
     researchItems.forEach((researchItem) => {
@@ -32,31 +36,66 @@ function init() {
 
     circles.forEach((circle) => {
       const year = circle.getAttribute('anm-year')
-      if (!year || !scrollRoller) return
+      if (!year || !scrollRollerDecade || !scrollRollerYear) return
 
       const researchItem = circle.closest('[anm-research=item]')
       if (!researchItem) return
 
       const lastDigit = parseInt(year.slice(-1))
+      const tensDigit = parseInt(year.slice(-2, -1))
 
-      gsap.to(scrollRoller, {
+      gsap.to(scrollRollerDecade, {
         scrollTrigger: {
           trigger: researchItem,
           start: 'top center',
           end: 'bottom center',
-          onEnter: () => updateYear(lastDigit),
-          onEnterBack: () => updateYear(lastDigit),
+          onEnter: () => {
+            updateYear(lastDigit)
+            updateDecade(tensDigit)
+          },
+          onEnterBack: () => {
+            updateYear(lastDigit)
+            updateDecade(tensDigit)
+          },
         },
       })
     })
   }, section)
 
   function updateYear(digit) {
-    gsap.to(scrollRoller, {
+    const digitWidth = getDigitWidth(digit)
+    gsap.to(scrollRollerYear, {
       y: `${-digit * 100}%`,
+      width: digitWidth,
       duration: 1,
       ease: 'expo.out',
     })
+  }
+
+  function updateDecade(digit) {
+    const digitWidth = getDigitWidth(digit)
+    gsap.to(scrollRollerDecade, {
+      y: `${-digit * 100}%`,
+      width: digitWidth,
+      duration: 1,
+      ease: 'expo.out',
+    })
+  }
+
+  function getDigitWidth(digit) {
+    // Create a temporary span to measure the text width
+    const temp = document.createElement('span')
+    temp.style.visibility = 'hidden'
+    temp.style.position = 'absolute'
+    temp.style.fontSize = getComputedStyle(scrollRollerYear).fontSize
+    temp.style.fontFamily = getComputedStyle(scrollRollerYear).fontFamily
+    temp.textContent = digit
+    document.body.appendChild(temp)
+
+    const width = `${temp.offsetWidth}px`
+    document.body.removeChild(temp)
+
+    return width
   }
 }
 

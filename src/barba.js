@@ -27,7 +27,7 @@ barba.init({
       async leave(data) {
         const done = this.async()
         const transitionWrap = document.querySelector('[anm-transition=wrap]')
-        const transitionLogo = document.querySelector('[anm-transition=logo]')
+        const transitionLogo = document.querySelectorAll('[anm-transition=logo]')
         const transitionDarkBg = document.querySelector('[anm-transition=dark-bg]')
 
         const tl = gsap.timeline({ defaults: { duration: 1, ease: 'expo.inOut' } })
@@ -37,7 +37,7 @@ barba.init({
         tl.set(transitionWrap, {
           display: 'flex',
         }).set(transitionLogo, {
-          yPercent: 100,
+          y: '5rem',
         })
 
         navBar.toggleFlyout(false)
@@ -52,11 +52,11 @@ barba.init({
               done()
             },
           }
-        ).to(transitionLogo, { yPercent: 0, duration: 1, ease: 'expo.out' }, '<+75%')
+        ).to(transitionLogo, { y: 0, duration: 1.5, ease: 'power4.inOut' }, '<')
       },
       after(data) {
         const transitionWrap = document.querySelector('[anm-transition=wrap]')
-        const transitionLogo = document.querySelector('[anm-transition=logo]')
+        const transitionLogo = document.querySelectorAll('[anm-transition=logo]')
         const transitionDarkBg = document.querySelector('[anm-transition=dark-bg]')
 
         mm.add(isDesktop, () => {
@@ -77,7 +77,7 @@ barba.init({
 
         const tl = gsap.timeline({ defaults: { duration: 1, ease: 'expo.inOut', onComplete: () => locomotiveScroll.start() } })
 
-        tl.to(transitionLogo, { yPercent: -100, duration: 1, ease: 'expo.in' }).to(
+        tl.to(transitionLogo, { y: '-5rem', duration: 1.5, ease: 'power4.inOut' }).to(
           transitionDarkBg,
           {
             clipPath: topClipPath,
@@ -89,7 +89,7 @@ barba.init({
               proxy.pageReady = true
             },
           },
-          '<+50%'
+          '<+25%'
         )
       },
     },

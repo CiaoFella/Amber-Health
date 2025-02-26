@@ -14,9 +14,10 @@ function init(namespace) {
 
   if (section) {
     const logo = section.querySelector('[anm-preloader=logo]')
+    const logoText = section.querySelector('[anm-preloader=logo-text]')
     ctx = gsap.context(() => {
       const tl = gsap.timeline({
-        defaults: { ease: 'expo.inOut', duration: 1 },
+        defaults: { ease: 'expo.inOut', duration: 1.5 },
         onStart: () => {
           locomotiveScroll.stop()
           proxy.pageReady = false
@@ -27,8 +28,8 @@ function init(namespace) {
         },
       })
 
-      tl.to(logo, { yPercent: -100, ease: 'expo.out' })
-        .to(logo, { yPercent: -210, ease: 'expo.in' })
+      tl.to(logo, { y: 0, ease: 'expo.inOut' })
+        .to([logo, logoText], { y: '-5rem', ease: 'expo.inOut' })
         .fromTo(section, { clipPath: fullClipPath }, { clipPath: topClipPath, duration: 1.5 }, '<+0.25')
         .call(
           () => {

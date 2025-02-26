@@ -11,7 +11,7 @@ function init() {
 
       const tl = gsap.timeline({ defaults: { duration: 1, ease: 'expo.out' } })
 
-      tl.from(items, { opacity: 0, rotate: 5, yPercent: 50, stagger: 0.1 })
+      tl.from(items, { opacity: 0, filter: 'blur(10px)', yPercent: 50, stagger: 0.1 })
 
       ScrollTrigger.create({
         trigger: list,

@@ -17,13 +17,14 @@ export default function handlePageEnterAnimation(currentPage) {
     const circles = section.querySelector('[anm-hero=circles]')
     const cta = section.querySelector('[anm-hero=cta]')
     const wave = section.querySelector('[anm-hero=wave]')
-    const bg = section.querySelector('[anm-hero=bg]')
     const trustHeadline = section.querySelector('[anm-hero=trust-headline]')
 
     let trustLogos = null
     if (section.querySelector('[anm-hero=trust-logos]')) {
       trustLogos = section.querySelector('[anm-hero=trust-logos]').children
     }
+    console.log(trustLogos)
+
     let ctaChildren = null
     if (cta) {
       ctaChildren = cta.children
@@ -34,7 +35,6 @@ export default function handlePageEnterAnimation(currentPage) {
 
     const headlineSplitType = headline.dataset.splitType || 'chars, words'
     let textSplits = []
-    let textSplitTypes = []
 
     texts.forEach((text) => {
       const textSplitType = text.dataset.splitType || 'lines'
@@ -105,7 +105,7 @@ export default function handlePageEnterAnimation(currentPage) {
     }
 
     if (trustLogos && section.querySelector('[anm-hero=trust-logos]').getAttribute('anm-static') !== 'true') {
-      tl.to(trustLogos, { opacity: 1, filter: 'blur(0px)', stagger: 0.1 }, '<+0.25')
+      tl.to(trustLogos, { opacity: 1, filter: 'blur(0px)', stagger: 0.1, y: 0 }, '<+0.25')
     }
 
     if (trustHeadline && trustHeadline.getAttribute('anm-static') !== 'true') {
