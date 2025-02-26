@@ -1,16 +1,14 @@
 @use './variables';
-@import './enterPage.scss';
-@import './detail.scss';
-@import './home.scss';
-@import './cursor.scss';
-@import './hero.scss';
-@import './movingGradient.scss';
-@import './navbar.scss';
-@import './approach.scss';
-@import './service.scss';
-@import './serviceOverview.scss';
-@import './teamList.scss';
-@import './preloader.scss';
+@use './enterPage.scss';
+@use './detail.scss';
+@use './cursor.scss';
+@use './movingGradient.scss';
+@use './navbar.scss';
+@use './approach.scss';
+@use './service.scss';
+@use './serviceOverview.scss';
+@use './teamList.scss';
+@use './preloader.scss';
 
 .footer_nav_link,
 .navbar_menu_link {

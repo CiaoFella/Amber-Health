@@ -14,7 +14,7 @@
     "format": "prettier --write 'src/**/*.{js,ts,css}'"
   },
   "dependencies": {
-    "@barba/core": "^2.10.2",
+    "@barba/core": "^2.10.3",
     "@studio-freight/lenis": "^1.0.42",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^12.0.2",
