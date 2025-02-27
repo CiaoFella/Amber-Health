@@ -36,9 +36,14 @@ barba.init({
 
         tl.set(transitionWrap, {
           display: 'flex',
-        }).set(transitionLogo, {
-          y: '5rem',
         })
+          .set(transitionLogo, {
+            y: '5rem',
+          })
+          .set(transitionLogo[1], {
+            y: '0rem',
+            opacity: 0,
+          })
 
         navBar.toggleFlyout(false)
 
@@ -52,7 +57,9 @@ barba.init({
               done()
             },
           }
-        ).to(transitionLogo, { y: 0, duration: 1.5, ease: 'power4.inOut' }, '<')
+        )
+          .to(transitionLogo, { y: 0, duration: 1.5, ease: 'power4.inOut' }, '<')
+          .to(transitionLogo[1], { opacity: 1, duration: 0.25 }, '<+0.5')
       },
       after(data) {
         const transitionWrap = document.querySelector('[anm-transition=wrap]')
