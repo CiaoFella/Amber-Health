@@ -83,7 +83,6 @@ function init() {
   }
 
   function getDigitWidth(digit) {
-    // Create a temporary span to measure the text width
     const temp = document.createElement('span')
     temp.style.visibility = 'hidden'
     temp.style.position = 'absolute'

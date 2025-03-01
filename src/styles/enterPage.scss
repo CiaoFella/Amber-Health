@@ -1,18 +1,32 @@
 @use './variables.scss';
 
-[anm-hero='headline'] .char {
-  opacity: 0;
-  filter: blur(10px);
+[anm-hero='headline'] {
+  .line {
+    opacity: 0;
+    filter: blur(10px);
+  }
+
+  .char {
+    opacity: 0;
+    filter: blur(10px);
+  }
+
+  @media (max-width: variables.$breakpoint-landscape) {
+    opacity: 0;
+    filter: blur(10px);
+  }
 }
 
-[anm-hero='headline'] .line {
-  opacity: 0;
-  filter: blur(10px);
-}
+[anm-hero='text'] {
+  .line {
+    opacity: 0;
+    filter: blur(10px);
+  }
 
-[anm-hero='text'] .line {
-  opacity: 0;
-  filter: blur(10px);
+  @media (max-width: variables.$breakpoint-landscape) {
+    opacity: 0;
+    filter: blur(10px);
+  }
 }
 
 [anm-hero='section'] {
@@ -35,7 +49,6 @@
 
 [anm-hero='cta'] > * {
   opacity: 0;
-  filter: blur(10px);
 }
 
 // WaveFlow

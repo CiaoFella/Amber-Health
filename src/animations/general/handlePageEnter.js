@@ -1,5 +1,5 @@
 import { proxy } from '../../utilities/pageReadyListener.js'
-import { fullClipPath } from '../../utilities/variables.js'
+import { fullClipPath, isLandscape, isMobile } from '../../utilities/variables.js'
 import { gsap, SplitType } from '../../vendor.js'
 
 const mm = gsap.matchMedia()
@@ -32,67 +32,84 @@ export default function handlePageEnterAnimation(currentPage) {
       wave.classList.add('is-transitioning')
     }
 
-    const headlineSplitType = headline.dataset.splitType || 'chars, words'
-    let textSplits = []
-
-    texts.forEach((text) => {
-      const textSplitType = text.dataset.splitType || 'lines'
-      const textStagger = text.getAttribute('anm-stagger') || 0.1
-      const textSplit = text.getAttribute('anm-static') === 'true' ? null : new SplitType(text, { types: [textSplitType] })
-
-      if (textSplit) {
-        textSplits.push({
-          split: textSplit,
-          type: textSplitType,
-          stagger: textStagger,
-        })
-      }
-    })
-
-    const headlineStagger = headline.getAttribute('anm-stagger') || 0.25
-
-    const headlineSplit = headline.getAttribute('anm-static') === 'true' ? null : new SplitType(headline, { types: headlineSplitType.split(', ') })
-
     tl = gsap.timeline({
       defaults: { duration: 1.5, ease: 'expo.out' },
       paused: true,
     })
 
-    if (headline.getAttribute('anm-static') !== 'true' && headlineSplit) {
-      const splitTypes = headlineSplitType.split(', ')
-      splitTypes.forEach((type) => {
-        if (headlineSplit[type]) {
-          tl.to(
-            headlineSplit[type],
-            {
-              opacity: 1,
-              filter: 'blur(0px)',
-              stagger: { amount: headlineStagger, from: 'random' },
-            },
-            '<'
-          )
+    mm.add(`(min-width: 769px)`, () => {
+      // Desktop and tablet (above landscape) animations with text splitting
+      const headlineSplitType = headline.dataset.splitType || 'chars, words'
+      let textSplits = []
+
+      texts.forEach((text) => {
+        const textSplitType = text.dataset.splitType || 'lines'
+        const textStagger = text.getAttribute('anm-stagger') || 0.1
+        const textSplit = text.getAttribute('anm-static') === 'true' ? null : new SplitType(text, { types: [textSplitType] })
+
+        if (textSplit) {
+          textSplits.push({
+            split: textSplit,
+            type: textSplitType,
+            stagger: textStagger,
+          })
         }
       })
-    }
 
-    if (texts.length > 0) {
-      textSplits.forEach(({ split, type, stagger }) => {
-        if (split) {
-          tl.to(
-            split[type],
-            {
-              opacity: 1,
-              filter: 'blur(0px)',
-              stagger: { amount: stagger, from: 'random' },
-            },
-            '<+0.25'
-          )
-        }
-      })
-    }
+      const headlineStagger = headline.getAttribute('anm-stagger') || 0.25
+      const headlineSplit = headline.getAttribute('anm-static') === 'true' ? null : new SplitType(headline, { types: headlineSplitType.split(', ') })
 
+      if (headline.getAttribute('anm-static') !== 'true' && headlineSplit) {
+        const splitTypes = headlineSplitType.split(', ')
+        splitTypes.forEach((type) => {
+          if (headlineSplit[type]) {
+            tl.to(
+              headlineSplit[type],
+              {
+                opacity: 1,
+                filter: 'blur(0px)',
+                stagger: { amount: headlineStagger, from: 'random' },
+              },
+              '<'
+            )
+          }
+        })
+      }
+
+      if (texts.length > 0) {
+        textSplits.forEach(({ split, type, stagger }) => {
+          if (split) {
+            tl.to(
+              split[type],
+              {
+                opacity: 1,
+                filter: 'blur(0px)',
+                stagger: { amount: stagger, from: 'random' },
+              },
+              '<+0.25'
+            )
+          }
+        })
+      }
+    })
+
+    mm.add(`${isLandscape}, ${isMobile}`, () => {
+      console.log(headline)
+
+      if (headline) {
+        tl.to(headline, { opacity: 1, filter: 'blur(0px)' }, '<')
+      }
+
+      if (texts.length > 0) {
+        texts.forEach((text) => {
+          tl.to(text, { opacity: 1, filter: 'blur(0px)' }, '<+0.25')
+        })
+      }
+    })
+
+    // Common animations for all viewport sizes
     if (cta && cta.getAttribute('anm-static') !== 'true') {
-      tl.to(cta, { opacity: 1, filter: 'blur(0px)' }, '<+0.25')
+      tl.to(cta.children, { opacity: 1 }, '<+0.25')
     }
 
     if (brandCircle && brandCircle.getAttribute('anm-static') !== 'true') {

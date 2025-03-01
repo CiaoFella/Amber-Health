@@ -47,14 +47,14 @@ function init() {
             if (headlines && headlines.length > 0) {
               headlines.forEach((headline) => {
                 const distanceAttribute = headline.getAttribute('anm-distance') || '0%'
-                const splitAttribute = context.conditions.mobile ? 'words' : headline.getAttribute('anm-split') || 'lines'
+                const splitAttribute = context.conditions.mobile ? '' : headline.getAttribute('anm-split') || 'lines'
                 const charsStaggerAttribute = headline.getAttribute('anm-chars-stagger') || 0.01
                 const wordsStaggerAttribute = headline.getAttribute('anm-words-stagger') || 0.1
                 const linesStaggerAttribute = headline.getAttribute('anm-lines-stagger') || 0.1
                 const durationAttribute = headline.getAttribute('anm-duration') || 2
                 const delayAttribute = headline.getAttribute('anm-delay') || 0
                 const easeAttribute = headline.getAttribute('anm-ease') || 'expo.out'
-                const customAttribute = headline.getAttribute('anm-custom') || 'filter: blur(5px), opacity: 0'
+                const customAttribute = context.conditions.mobile ? 'opacity: 0' : headline.getAttribute('anm-custom') || 'filter: blur(5px), opacity: 0'
 
                 const parseCustomAttribute = (attr) => {
                   const props = {}
@@ -128,14 +128,14 @@ function init() {
 
             if (texts && texts.length > 0) {
               const distanceAttribute = texts[0].getAttribute('anm-distance') || '0rem'
-              const splitAttribute = texts[0].getAttribute('anm-split') || 'lines'
+              const splitAttribute = context.conditions.mobile ? '' : texts[0].getAttribute('anm-split') || 'lines'
               const charsStaggerAttribute = texts[0].getAttribute('anm-chars-stagger') || 0.01
               const wordsStaggerAttribute = texts[0].getAttribute('anm-words-stagger') || 0.1
               const linesStaggerAttribute = texts[0].getAttribute('anm-lines-stagger') || 0.1
               const durationAttribute = texts[0].getAttribute('anm-duration') || 2
               const delayAttribute = texts[0].getAttribute('anm-delay') || 0.25
               const easeAttribute = texts[0].getAttribute('anm-ease') || 'expo.out'
-              const customAttribute = texts[0].getAttribute('anm-custom') || 'filter: blur(5px), opacity: 0'
+              const customAttribute = context.conditions.mobile ? 'opacity: 0' : texts[0].getAttribute('anm-custom') || 'filter: blur(5px), opacity: 0'
 
               const parseCustomAttribute = (attr) => {
                 const props = {}
@@ -176,6 +176,9 @@ function init() {
               const animationProps = parseCustomAttribute(customAttribute)
               const toStateProps = transformValuesForToState(texts[0], animationProps)
 
+              const hasUnit = /[a-z%]+$/i.test(distanceAttribute)
+              const yPosition = hasUnit ? distanceAttribute : parseFloat(distanceAttribute)
+
               if (splitAttribute) {
                 const splitTypes = splitAttribute.split(',').map((type) => type.trim())
 
@@ -191,10 +194,6 @@ function init() {
                       absolute: false,
                     })
                 )
-
-                let yPosition
-                const hasUnit = /[a-z%]+$/i.test(distanceAttribute)
-                yPosition = hasUnit ? distanceAttribute : parseFloat(distanceAttribute)
 
                 splitTypes.forEach((type) => {
                   let allSplitElements = []
