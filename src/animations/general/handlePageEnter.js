@@ -104,7 +104,7 @@ export default function handlePageEnterAnimation(currentPage) {
       tl.to(circles, { opacity: 0.3, filter: 'blur(0px)' }, '<+0.25')
     }
 
-    if (trustLogos && section.querySelector('[anm-hero=trust-logos]').getAttribute('anm-static') !== 'true') {
+    if (trustLogos && section.querySelector('[anm-hero=trust-logos]').getAttributfe('anm-static') !== 'true') {
       tl.to(trustLogos, { opacity: 1, filter: 'blur(0px)', stagger: 0.1, y: 0 }, '<+0.25')
     }
 

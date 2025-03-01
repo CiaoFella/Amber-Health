@@ -1,7 +1,9 @@
+import { isMobile } from '../../utilities/variables.js'
 import { gsap, ScrollTrigger } from '../../vendor.js'
 
 let ctx
 let animation
+let mm = gsap.matchMedia()
 
 function init() {
   const marqueeItems = document.querySelectorAll('[data-marquee-scroll-direction-target]')
@@ -21,7 +23,13 @@ function init() {
     const scrollSpeedAttr = parseFloat(scrollSpeed)
     const speedMultiplier = window.innerWidth < 479 ? 0.25 : window.innerWidth < 991 ? 0.5 : 1
 
-    let marqueeSpeed = marqueeSpeedAttr * (marqueeContent.offsetWidth / window.innerWidth) * speedMultiplier
+    let viewportMultiplier
+
+    mm.add(isMobile, () => {
+      viewportMultiplier = 2
+    })
+
+    let marqueeSpeed = marqueeSpeedAttr * (marqueeContent.offsetWidth / window.innerWidth) * speedMultiplier * viewportMultiplier
 
     marqueeScroll.style.marginLeft = `${scrollSpeedAttr * -1}%`
     marqueeScroll.style.width = `${scrollSpeedAttr * 2 + 100}%`
