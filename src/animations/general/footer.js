@@ -1,4 +1,5 @@
 import { gsap, ScrollTrigger } from '../../vendor.js'
+import { isDesktop, isTablet, isLandscape, isMobile } from '../../utilities/variables.js'
 
 let ctx
 
@@ -32,19 +33,28 @@ function init() {
     if (gradientWrap) {
       const gradientContainer = gradientWrap.querySelector('[anm-footer=gradient-container]')
       const height = getComputedStyle(gradientContainer).height
-      ctx = gsap.context(() => {
-        const tl = gsap.timeline({ defaults: { duration: 3, ease: 'expo.out' } })
 
-        tl.fromTo(gradientContainer, { height: 0, y: '10%' }, { height: height, y: '-10%' })
+      // Check if we're on desktop or tablet (not mobile and not landscape)
+      const isLargerScreen = !window.matchMedia(isLandscape).matches && !window.matchMedia(isMobile).matches
 
-        ScrollTrigger.create({
-          trigger: gradientWrap,
-          animation: tl,
-          start: 'top bottom',
-          end: 'top 75%',
-          toggleActions: 'none play none reset',
+      if (isLargerScreen) {
+        ctx = gsap.context(() => {
+          const tl = gsap.timeline({ defaults: { duration: 3, ease: 'expo.out' } })
+
+          tl.fromTo(gradientContainer, { height: 0, y: '10%' }, { height: height, y: '-10%' })
+
+          ScrollTrigger.create({
+            trigger: gradientWrap,
+            animation: tl,
+            start: 'top bottom',
+            end: 'top 75%',
+            toggleActions: 'none play none reset',
+          })
         })
-      })
+      } else {
+        // For mobile and landscape, set the gradient container to full height without animation
+        gradientContainer.style.height = height
+      }
     }
   }
 }

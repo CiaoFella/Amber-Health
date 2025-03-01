@@ -1,3 +1,5 @@
+@use './variables.scss';
+
 [anm-service-overview='bg-wrap'] {
   > * {
   }
@@ -6,6 +8,10 @@
 [anm-service-overview='list-wrap'] {
   [anm-service-overview='headline'] {
     opacity: 0.5;
+
+    @media (max-width: variables.$breakpoint-landscape) {
+      opacity: 0.8;
+    }
   }
 
   [anm-service-overview='headline']:first-of-type {

@@ -90,6 +90,12 @@
     position: absolute;
     mix-blend-mode: variables.$blending;
 
+    // Disable animations for mobile and landscape
+    @media (max-width: variables.$breakpoint-landscape), (max-width: variables.$breakpoint-mobile) {
+      animation: none !important;
+      transform: none !important;
+    }
+
     &.is-1 {
       background: radial-gradient(circle at center, variables.$gradient-color-3 0, rgba(100, 220, 255, 0) 50%) no-repeat;
 

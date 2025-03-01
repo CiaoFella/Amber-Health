@@ -1,7 +1,8 @@
-import { fullClipPath, topClipPath } from '../../utilities/variables.js'
+import { fullClipPath, topClipPath, isLandscape } from '../../utilities/variables.js'
 import { gsap, ScrollTrigger, Flip } from '../../vendor.js'
 
 let ctx
+const mm = gsap.matchMedia()
 
 function init() {
   const sections = document.querySelectorAll('[anm-service-overview=section]')
@@ -15,7 +16,18 @@ function init() {
 
       const scrollTl = gsap.timeline({ defaults: { duration: 1.5, ease: 'expo.out' } })
 
-      gsap.set(headlines, { opacity: 0.5 })
+      // Set different opacity for inactive headlines based on viewport size
+      mm.add(`(not ${isLandscape})`, () => {
+        // Desktop and tablet (above landscape)
+        gsap.set(headlines, { opacity: 0.5 })
+      })
+
+      mm.add(`${isLandscape}`, () => {
+        // Landscape and below
+        gsap.set(headlines, { opacity: 0.7 })
+      })
+
+      // Active headline is always fully opaque
       gsap.set(headlines[0], { opacity: 1 })
       gsap.set(bgItems, { opacity: 0 })
       gsap.set(bgItems[0], { opacity: 1 })
@@ -61,17 +73,18 @@ function init() {
             ease: 'expo.out',
           })
 
-          // Create new timeline for background transition
-          currentBgTl = gsap
-            .timeline()
-            .to(bgItems, {
-              opacity: 0,
-              scale: 1.05,
-              duration: 0.75,
-              filter: 'blur(10px)',
-              ease: 'expo.inOut',
-            })
-            .to(
+          // Create new timeline for background transition with different opacity based on viewport
+          currentBgTl = gsap.timeline().to(bgItems, {
+            opacity: 0,
+            scale: 1.05,
+            duration: 0.75,
+            filter: 'blur(10px)',
+            ease: 'expo.inOut',
+          })
+
+          // Set different opacity for inactive headlines based on viewport
+          mm.add(`(not ${isLandscape})`, () => {
+            currentBgTl.to(
               headlines,
               {
                 opacity: 0.5,
@@ -80,6 +93,21 @@ function init() {
               },
               '<'
             )
+          })
+
+          mm.add(`${isLandscape}`, () => {
+            currentBgTl.to(
+              headlines,
+              {
+                opacity: 0.7,
+                duration: 0.5,
+                ease: 'power3.inOut',
+              },
+              '<'
+            )
+          })
+
+          currentBgTl
             .fromTo(
               matchingBgItem,
               {
