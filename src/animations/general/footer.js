@@ -51,9 +51,6 @@ function init() {
             toggleActions: 'none play none reset',
           })
         })
-      } else {
-        // For mobile and landscape, set the gradient container to full height without animation
-        gradientContainer.style.height = height
       }
     }
   }
