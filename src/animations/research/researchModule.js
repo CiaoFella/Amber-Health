@@ -1,6 +1,8 @@
+import { isLandscape } from '../../utilities/variables.js'
 import { gsap, ScrollTrigger } from '../../vendor.js'
 
 let ctx
+let mm = gsap.matchMedia()
 
 function init() {
   const section = document.querySelector('[anm-research=section]')
@@ -31,7 +33,11 @@ function init() {
         toggleActions: 'none play none none',
       })
 
-      tl.from(content.children, { opacity: 0, filter: 'blur(10px)', stagger: 0.1, delay: 0.25 })
+      mm.add(`(not ${isLandscape})`, () => {
+        tl.from(content.children, { opacity: 0, filter: 'blur(10px)', stagger: 0.1, delay: 0.25 })
+      }).add(`${isLandscape}`, () => {
+        tl.from(content.children, { opacity: 0, stagger: 0.1, delay: 0.25 })
+      })
     })
 
     circles.forEach((circle) => {
