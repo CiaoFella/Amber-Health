@@ -29,6 +29,10 @@ function init() {
       viewportMultiplier = 2
     })
 
+    mm.add(`(not ${isMobile})`, () => {
+      viewportMultiplier = 1
+    })
+
     let marqueeSpeed = marqueeSpeedAttr * (marqueeContent.offsetWidth / window.innerWidth) * speedMultiplier * viewportMultiplier
 
     marqueeScroll.style.marginLeft = `${scrollSpeedAttr * -1}%`
