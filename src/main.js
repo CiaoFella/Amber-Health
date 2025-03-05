@@ -6,7 +6,6 @@ import { getCurrentPage, handleResponsiveElements, updateCurrentNavLink } from '
 import createSplitTypes from './utilities/createSplitTypes.js'
 import lenis, { createSmoothScroll } from './utilities/smoothScroll.js'
 import handlePageEnterAnimation from './animations/general/handlePageEnter.js'
-import { cursor, magneticCursor } from './utilities/customCursor/customCursor.js'
 import { isDesktop } from './utilities/variables.js'
 import { proxy } from './utilities/pageReadyListener.js'
 import locomotiveScroll from './utilities/smoothScroll.js'
@@ -58,10 +57,6 @@ createSplitTypes.init()
 loadPageModule(initialPageName)
 preloader.init(initialPageName)
 handleResponsiveElements()
-mm.add(isDesktop, () => {
-  cursor.init()
-  magneticCursor()
-})
 document.addEventListener('onPageReady', (event) => {
   if (event.detail === true) {
     handlePageEnterAnimation(getCurrentPage()).play()

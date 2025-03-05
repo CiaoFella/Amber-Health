@@ -1,4 +1,3 @@
-import movingGradient from './general/movingGradient.js'
 import footer from './general/footer.js'
 import navBar from './general/navBar.js'
 import bgGradient from './shared/bgGradient.js'

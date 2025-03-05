@@ -1,5 +1,4 @@
 import createSplitTypes from './utilities/createSplitTypes.js'
-import { cursor, magneticCursor } from './utilities/customCursor/customCursor.js'
 import { closeMenu } from './utilities/helper.js'
 import { proxy } from './utilities/pageReadyListener.js'
 import { bottomClipPath, fullClipPath, isDesktop, topClipPath } from './utilities/variables.js'
@@ -65,13 +64,6 @@ barba.init({
         const transitionWrap = document.querySelector('[anm-transition=wrap]')
         const transitionLogo = document.querySelectorAll('[anm-transition=logo]')
         const transitionDarkBg = document.querySelector('[anm-transition=dark-bg]')
-
-        mm.add(isDesktop, () => {
-          const customCursor = document.querySelector('.cb-cursor')
-          customCursor.remove()
-          cursor.init()
-          magneticCursor()
-        })
 
         createSplitTypes.cleanup()
         createSplitTypes.init()
