@@ -6,7 +6,7 @@ export function unwrapSpanAndPreserveClasses(element) {
   const spans = element.querySelectorAll('span')
 
   // Iterate over each span
-  spans.forEach(span => {
+  spans.forEach((span) => {
     // Get the class list of the span
     const spanClasses = span.className
 
@@ -14,7 +14,7 @@ export function unwrapSpanAndPreserveClasses(element) {
     const fragment = document.createDocumentFragment()
 
     // Iterate over child nodes to preserve <br> elements
-    span.childNodes.forEach(node => {
+    span.childNodes.forEach((node) => {
       if (node.nodeType === Node.TEXT_NODE) {
         // Split the text content into words
         const words = node.textContent.split(/\s+/)
@@ -88,7 +88,7 @@ export function handleResponsiveElements() {
   })
 
   function handleElementRemoval(breakpoint) {
-    document.querySelectorAll('[data-remove]').forEach(el => {
+    document.querySelectorAll('[data-remove]').forEach((el) => {
       const removeAt = el.getAttribute('data-remove') // e.g., "tablet", "landscape", "mobile"
       const parent = el.parentNode
       const nextSibling = el.nextElementSibling
@@ -106,7 +106,7 @@ export function handleResponsiveElements() {
 export function updateCurrentNavLink() {
   const currentPath = window.location.pathname
 
-  document.querySelectorAll('a').forEach(link => {
+  document.querySelectorAll('a').forEach((link) => {
     const href = link.getAttribute('href')
 
     if (href === currentPath || href === currentPath + '/') {
@@ -114,5 +114,21 @@ export function updateCurrentNavLink() {
     } else {
       link.classList.remove('w--current')
     }
+  })
+}
+
+export function disableAllFirstOptions() {
+  const selectElements = document.querySelectorAll('.w-select')
+
+  selectElements.forEach((select) => {
+    select.style.color = 'unset'
+    const firstOption = select.querySelector('option:first-child')
+    if (firstOption) {
+      firstOption.disabled = true
+    }
+
+    select.addEventListener('change', () => {
+      select.style.color = 'var(--swatch--dark)'
+    })
   })
 }

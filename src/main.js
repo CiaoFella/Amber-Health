@@ -2,12 +2,10 @@ import { gsap, LocomotiveScroll, ScrollTrigger } from './vendor.js'
 import barba from './barba.js'
 import menu from './animations/general/menu.js'
 import preloader from './animations/general/preloader.js'
-import { getCurrentPage, handleResponsiveElements, updateCurrentNavLink } from './utilities/helper.js'
+import { disableAllFirstOptions, getCurrentPage, handleResponsiveElements, updateCurrentNavLink } from './utilities/helper.js'
 import createSplitTypes from './utilities/createSplitTypes.js'
-import lenis, { createSmoothScroll } from './utilities/smoothScroll.js'
+
 import handlePageEnterAnimation from './animations/general/handlePageEnter.js'
-import { isDesktop } from './utilities/variables.js'
-import { proxy } from './utilities/pageReadyListener.js'
 import locomotiveScroll from './utilities/smoothScroll.js'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -67,6 +65,7 @@ createSplitTypes.init()
 loadPageModule(initialPageName)
 preloader.init(initialPageName)
 handleResponsiveElements()
+disableAllFirstOptions()
 document.addEventListener('onPageReady', (event) => {
   if (event.detail === true) {
     handlePageEnterAnimation(getCurrentPage()).play()
@@ -88,6 +87,7 @@ barba.hooks.beforeEnter(() => {
 barba.hooks.afterEnter((data) => {
   resetWebflow(data)
   cleanupCurrentModule()
+  disableAllFirstOptions()
 })
 
 barba.hooks.after((data) => {
