@@ -6,6 +6,10 @@ function init() {
   const buttons = document.querySelectorAll('[anm-btn=btn]')
 
   buttons.forEach((button) => {
+    if (button.getAttribute('data-wf--btn-main--variant') === 'no-icons') {
+      return
+    }
+
     const buttonInner = button.querySelector('[anm-btn=inner]')
     const iconInner = button.querySelectorAll('[anm-btn=icon-inner]')
 
