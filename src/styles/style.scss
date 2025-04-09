@@ -41,6 +41,19 @@ html.lenis body {
   height: auto;
 }
 
+.link_card_wrap {
+  &:hover {
+    .image_variants_wrap {
+      scale: 1.1;
+    }
+  }
+}
+
+.image_variants_wrap {
+  scale: 1;
+  transition: scale 0.5s variables.$power3-out;
+}
+
 .lenis.lenis-smooth {
   scroll-behavior: auto !important;
 }
