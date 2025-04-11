@@ -1,5 +1,5 @@
 import createSplitTypes from './utilities/createSplitTypes.js'
-import { closeMenu } from './utilities/helper.js'
+import { closeMenu, closeAllDropdowns } from './utilities/helper.js'
 import { proxy } from './utilities/pageReadyListener.js'
 import { bottomClipPath, fullClipPath, isDesktop, topClipPath } from './utilities/variables.js'
 import { gsap, barba, ScrollTrigger } from './vendor.js'
@@ -16,6 +16,11 @@ barba.hooks.before((data) => {
 
 barba.hooks.after((data) => {
   data.next.container.classList.remove('is-animating')
+})
+
+barba.hooks.beforeEnter(() => {
+  closeAllDropdowns()
+  createSplitTypes.cleanup()
 })
 
 barba.init({

@@ -7,6 +7,7 @@ import hero from './shared/hero.js'
 import textReveal from './shared/textReveal.js'
 import marquee from './general/marquee.js'
 import counter from './shared/counter.js'
+import targetReveal from './general/targetReveal.js'
 
 function init() {
   hero.init()
@@ -18,6 +19,7 @@ function init() {
   navBar.init()
   marquee.init()
   counter.init()
+  targetReveal.init()
 }
 
 function cleanup() {
@@ -29,6 +31,7 @@ function cleanup() {
   navBar.cleanup()
   marquee.cleanup()
   counter.cleanup()
+  targetReveal.cleanup()
 }
 
 export default {

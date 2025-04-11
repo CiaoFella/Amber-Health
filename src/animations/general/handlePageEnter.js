@@ -38,64 +38,63 @@ export default function handlePageEnterAnimation(currentPage) {
     })
 
     mm.add(`(min-width: 769px)`, () => {
-      // Desktop and tablet (above landscape) animations with text splitting
-      const headlineSplitType = headline.dataset.splitType || 'chars, words'
-      let textSplits = []
+      if (headline && texts.length > 0) {
+        const headlineSplitType = headline.dataset.splitType || 'chars, words'
+        let textSplits = []
 
-      texts.forEach((text) => {
-        const textSplitType = text.dataset.splitType || 'lines'
-        const textStagger = text.getAttribute('anm-stagger') || 0.1
-        const textSplit = text.getAttribute('anm-static') === 'true' ? null : new SplitType(text, { types: [textSplitType] })
+        texts.forEach((text) => {
+          const textSplitType = text.dataset.splitType || 'lines'
+          const textStagger = text.getAttribute('anm-stagger') || 0.1
+          const textSplit = text.getAttribute('anm-static') === 'true' ? null : new SplitType(text, { types: [textSplitType] })
 
-        if (textSplit) {
-          textSplits.push({
-            split: textSplit,
-            type: textSplitType,
-            stagger: textStagger,
+          if (textSplit) {
+            textSplits.push({
+              split: textSplit,
+              type: textSplitType,
+              stagger: textStagger,
+            })
+          }
+        })
+
+        const headlineStagger = headline.getAttribute('anm-stagger') || 0.25
+        const headlineSplit = headline.getAttribute('anm-static') === 'true' ? null : new SplitType(headline, { types: headlineSplitType.split(', ') })
+
+        if (headline.getAttribute('anm-static') !== 'true' && headlineSplit) {
+          const splitTypes = headlineSplitType.split(', ')
+          splitTypes.forEach((type) => {
+            if (headlineSplit[type]) {
+              tl.to(
+                headlineSplit[type],
+                {
+                  opacity: 1,
+                  filter: 'blur(0px)',
+                  stagger: { amount: headlineStagger, from: 'random' },
+                },
+                '<'
+              )
+            }
           })
         }
-      })
 
-      const headlineStagger = headline.getAttribute('anm-stagger') || 0.25
-      const headlineSplit = headline.getAttribute('anm-static') === 'true' ? null : new SplitType(headline, { types: headlineSplitType.split(', ') })
-
-      if (headline.getAttribute('anm-static') !== 'true' && headlineSplit) {
-        const splitTypes = headlineSplitType.split(', ')
-        splitTypes.forEach((type) => {
-          if (headlineSplit[type]) {
-            tl.to(
-              headlineSplit[type],
-              {
-                opacity: 1,
-                filter: 'blur(0px)',
-                stagger: { amount: headlineStagger, from: 'random' },
-              },
-              '<'
-            )
-          }
-        })
-      }
-
-      if (texts.length > 0) {
-        textSplits.forEach(({ split, type, stagger }) => {
-          if (split) {
-            tl.to(
-              split[type],
-              {
-                opacity: 1,
-                filter: 'blur(0px)',
-                stagger: { amount: stagger, from: 'random' },
-              },
-              '<+0.25'
-            )
-          }
-        })
+        if (texts.length > 0) {
+          textSplits.forEach(({ split, type, stagger }) => {
+            if (split) {
+              tl.to(
+                split[type],
+                {
+                  opacity: 1,
+                  filter: 'blur(0px)',
+                  stagger: { amount: stagger, from: 'random' },
+                },
+                '<+0.25'
+              )
+            }
+          })
+        }
       }
     })
 
     mm.add(`${isLandscape}, ${isMobile}`, () => {
-      console.log(headline)
-
       if (headline) {
         tl.to(headline, { opacity: 1, filter: 'blur(0px)' }, '<')
       }

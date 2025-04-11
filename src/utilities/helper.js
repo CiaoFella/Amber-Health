@@ -132,3 +132,39 @@ export function disableAllFirstOptions() {
     })
   })
 }
+
+export function closeAllDropdowns() {
+  document.querySelectorAll('.w-dropdown').forEach((dropdown) => {
+    dropdown.querySelectorAll('.w--open').forEach((openElement) => {
+      openElement.classList.remove('w--open')
+    })
+  })
+}
+
+export function initDropdownHoverBehavior() {
+  const dropdowns = document.querySelectorAll('.w-dropdown[data-hover="true"]')
+
+  dropdowns.forEach((dropdown) => {
+    const toggle = dropdown.querySelector('.w-dropdown-toggle')
+    const list = dropdown.querySelector('.w-dropdown-list')
+    let closeTimeout = null
+
+    // Mouse enter dropdown wrapper
+    dropdown.addEventListener('mouseenter', () => {
+      if (closeTimeout) {
+        clearTimeout(closeTimeout)
+        closeTimeout = null
+      }
+      toggle.setAttribute('aria-expanded', 'true')
+      list.classList.add('w--open')
+    })
+
+    // Mouse leave dropdown wrapper
+    dropdown.addEventListener('mouseleave', () => {
+      closeTimeout = setTimeout(() => {
+        toggle.setAttribute('aria-expanded', 'false')
+        list.classList.remove('w--open')
+      }, 500) // 500ms delay
+    })
+  })
+}

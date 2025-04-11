@@ -2,7 +2,7 @@ import { gsap, LocomotiveScroll, ScrollTrigger } from './vendor.js'
 import barba from './barba.js'
 import menu from './animations/general/menu.js'
 import preloader from './animations/general/preloader.js'
-import { disableAllFirstOptions, getCurrentPage, handleResponsiveElements, updateCurrentNavLink } from './utilities/helper.js'
+import { disableAllFirstOptions, getCurrentPage, handleResponsiveElements, updateCurrentNavLink, initDropdownHoverBehavior } from './utilities/helper.js'
 import createSplitTypes from './utilities/createSplitTypes.js'
 
 import handlePageEnterAnimation from './animations/general/handlePageEnter.js'
@@ -66,6 +66,7 @@ loadPageModule(initialPageName)
 preloader.init(initialPageName)
 handleResponsiveElements()
 disableAllFirstOptions()
+initDropdownHoverBehavior()
 document.addEventListener('onPageReady', (event) => {
   if (event.detail === true) {
     handlePageEnterAnimation(getCurrentPage()).play()
@@ -95,5 +96,6 @@ barba.hooks.after((data) => {
   updateCurrentNavLink()
   loadPageModule(pageName)
   handleResponsiveElements()
+  initDropdownHoverBehavior()
   createSmoothScroll()
 })
