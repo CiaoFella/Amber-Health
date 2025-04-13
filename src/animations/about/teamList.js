@@ -7,6 +7,8 @@ function init() {
   const teamListSection = document.querySelector('[anm-team-list=section]')
   const teamListItems = teamListSection.querySelectorAll('[anm-team-list=item]')
 
+  if (!teamListSection) return
+
   const modalWrap = document.querySelector('[anm-team-modal=wrap]')
   const modalBg = document.querySelector('[anm-team-modal=bg]')
   const modalOuter = document.querySelector('[anm-team-modal=outer]')
