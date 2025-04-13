@@ -8,8 +8,7 @@ let menuTriggerListener = null
 
 function init() {
   const navbar = document.querySelector('[anm-navbar=wrap]')
-  const dropdown = document.querySelector('[anm-navbar=dropdown]')
-  const dropdownTrigger = document.querySelector('[anm-navbar=dropdown-trigger]')
+  const dropdownTriggers = document.querySelectorAll('[anm-navbar=dropdown-trigger]')
   const menuTrigger = document.querySelector('[anm-navbar=menu-trigger]')
   const flyoutWrap = document.querySelector('[anm-flyout=wrap]')
   if (!navbar) return
@@ -23,7 +22,13 @@ function init() {
     navbar.setAttribute('data-theme', heroBg ? 'dark' : 'light')
   }
 
-  if (dropdownTrigger && dropdown) {
+  // Handle multiple dropdowns
+  dropdownTriggers.forEach((trigger) => {
+    const dropdownId = trigger.getAttribute('data-dropdown')
+    const dropdown = document.querySelector(`[anm-navbar=dropdown][data-dropdown="${dropdownId}"]`)
+
+    if (!dropdown) return
+
     dropdown.querySelectorAll('[anm-navbar=dropdown-item]').forEach((item, index) => {
       item.style.setProperty('--item-index', index)
     })
@@ -31,7 +36,7 @@ function init() {
     let isDropdownHovered = false
     let isTriggerHovered = false
 
-    dropdownTrigger.addEventListener('mouseenter', () => {
+    trigger.addEventListener('mouseenter', () => {
       isTriggerHovered = true
       dropdown.classList.add('is-open')
       navbar.classList.add('is-scrolled')
@@ -51,7 +56,7 @@ function init() {
       }
     })
 
-    dropdownTrigger.addEventListener('mouseleave', () => {
+    trigger.addEventListener('mouseleave', () => {
       isTriggerHovered = false
       setTimeout(() => {
         if (!isDropdownHovered) {
@@ -62,7 +67,7 @@ function init() {
         }
       }, 100)
     })
-  }
+  })
 
   if (menuTrigger && flyoutWrap) {
     // Update menuItems reference
