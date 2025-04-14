@@ -5,6 +5,27 @@ let scrollTrigger
 let scrollTriggers = []
 let menuItems = null
 let menuTriggerListener = null
+let isAnyDropdownOpen = false
+let originalTheme = null
+let closeTimeout = null
+let activeDropdown = null
+let previousDropdown = null
+
+function handleDropdownTheme(navbar, shouldOpen) {
+  if (shouldOpen && !isAnyDropdownOpen) {
+    // Opening first dropdown
+    navbar.classList.add('is-scrolled')
+    navbar.setAttribute('data-theme', 'light')
+    isAnyDropdownOpen = true
+  } else if (!shouldOpen && isAnyDropdownOpen && !activeDropdown) {
+    // Only change theme back if no dropdown is active
+    if (scrollTrigger && scrollTrigger.progress === 0) {
+      navbar.classList.remove('is-scrolled')
+      navbar.setAttribute('data-theme', originalTheme)
+    }
+    isAnyDropdownOpen = false
+  }
+}
 
 function init() {
   const navbar = document.querySelector('[anm-navbar=wrap]')
@@ -19,7 +40,8 @@ function init() {
   const heroSection = document.querySelector('[anm-hero=section]')
   if (heroSection) {
     const heroBg = heroSection.querySelector('[anm-hero=bg]')
-    navbar.setAttribute('data-theme', heroBg ? 'dark' : 'light')
+    originalTheme = heroBg ? 'dark' : 'light'
+    navbar.setAttribute('data-theme', originalTheme)
   }
 
   // Handle multiple dropdowns
@@ -38,20 +60,36 @@ function init() {
 
     trigger.addEventListener('mouseenter', () => {
       isTriggerHovered = true
+
+      // If we're switching from another dropdown, close the previous one
+      if (isAnyDropdownOpen && previousDropdown && previousDropdown !== dropdown) {
+        previousDropdown.classList.remove('is-open')
+      }
+
+      // Open the new dropdown
       dropdown.classList.add('is-open')
-      navbar.classList.add('is-scrolled')
+      previousDropdown = dropdown
+      activeDropdown = dropdown
+
+      // Handle theme if this is the first dropdown
+      if (!isAnyDropdownOpen) {
+        handleDropdownTheme(navbar, true)
+      }
     })
 
     dropdown.addEventListener('mouseenter', () => {
       isDropdownHovered = true
+      activeDropdown = dropdown
     })
 
     dropdown.addEventListener('mouseleave', () => {
       isDropdownHovered = false
       if (!isTriggerHovered) {
         dropdown.classList.remove('is-open')
-        if (scrollTrigger && scrollTrigger.progress === 0) {
-          navbar.classList.remove('is-scrolled')
+        if (activeDropdown === dropdown) {
+          activeDropdown = null
+          previousDropdown = null
+          handleDropdownTheme(navbar, false)
         }
       }
     })
@@ -61,8 +99,10 @@ function init() {
       setTimeout(() => {
         if (!isDropdownHovered) {
           dropdown.classList.remove('is-open')
-          if (scrollTrigger && scrollTrigger.progress === 0) {
-            navbar.classList.remove('is-scrolled')
+          if (activeDropdown === dropdown) {
+            activeDropdown = null
+            previousDropdown = null
+            handleDropdownTheme(navbar, false)
           }
         }
       }, 100)
