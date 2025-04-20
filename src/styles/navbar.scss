@@ -34,7 +34,7 @@
     }
 
     &.is-open {
-      max-height: 600px;
+      max-height: 80vh;
       clip-path: variables.$fullclipPath;
 
       [anm-navbar='dropdown-visual'] > * {
