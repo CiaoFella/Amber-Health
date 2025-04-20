@@ -5,9 +5,10 @@ let ctx
 
 function init() {
   const teamListSection = document.querySelector('[anm-team-list=section]')
-  const teamListItems = teamListSection.querySelectorAll('[anm-team-list=item]')
 
   if (!teamListSection) return
+
+  const teamListItems = teamListSection.querySelectorAll('[anm-team-list=item]')
 
   const modalWrap = document.querySelector('[anm-team-modal=wrap]')
   const modalBg = document.querySelector('[anm-team-modal=bg]')
