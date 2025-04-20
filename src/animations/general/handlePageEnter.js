@@ -38,16 +38,34 @@ export default function handlePageEnterAnimation(currentPage) {
     })
 
     mm.add(`(min-width: 769px)`, () => {
-      if (headline && texts.length > 0) {
+      if (headline && headline.getAttribute('anm-static') !== 'true') {
         const headlineSplitType = headline.dataset.splitType || 'chars, words'
+        const headlineStagger = headline.getAttribute('anm-stagger') || 0.25
+        const headlineSplit = new SplitType(headline, { types: headlineSplitType.split(', ') })
+
+        const splitTypes = headlineSplitType.split(', ')
+        splitTypes.forEach((type) => {
+          if (headlineSplit[type]) {
+            tl.to(
+              headlineSplit[type],
+              {
+                opacity: 1,
+                filter: 'blur(0px)',
+                stagger: { amount: headlineStagger, from: 'random' },
+              },
+              '<'
+            )
+          }
+        })
+      }
+
+      if (texts.length > 0) {
         let textSplits = []
-
         texts.forEach((text) => {
-          const textSplitType = text.dataset.splitType || 'lines'
-          const textStagger = text.getAttribute('anm-stagger') || 0.1
-          const textSplit = text.getAttribute('anm-static') === 'true' ? null : new SplitType(text, { types: [textSplitType] })
-
-          if (textSplit) {
+          if (text.getAttribute('anm-static') !== 'true') {
+            const textSplitType = text.dataset.splitType || 'lines'
+            const textStagger = text.getAttribute('anm-stagger') || 0.1
+            const textSplit = new SplitType(text, { types: [textSplitType] })
             textSplits.push({
               split: textSplit,
               type: textSplitType,
@@ -56,41 +74,19 @@ export default function handlePageEnterAnimation(currentPage) {
           }
         })
 
-        const headlineStagger = headline.getAttribute('anm-stagger') || 0.25
-        const headlineSplit = headline.getAttribute('anm-static') === 'true' ? null : new SplitType(headline, { types: headlineSplitType.split(', ') })
-
-        if (headline.getAttribute('anm-static') !== 'true' && headlineSplit) {
-          const splitTypes = headlineSplitType.split(', ')
-          splitTypes.forEach((type) => {
-            if (headlineSplit[type]) {
-              tl.to(
-                headlineSplit[type],
-                {
-                  opacity: 1,
-                  filter: 'blur(0px)',
-                  stagger: { amount: headlineStagger, from: 'random' },
-                },
-                '<'
-              )
-            }
-          })
-        }
-
-        if (texts.length > 0) {
-          textSplits.forEach(({ split, type, stagger }) => {
-            if (split) {
-              tl.to(
-                split[type],
-                {
-                  opacity: 1,
-                  filter: 'blur(0px)',
-                  stagger: { amount: stagger, from: 'random' },
-                },
-                '<+0.25'
-              )
-            }
-          })
-        }
+        textSplits.forEach(({ split, type, stagger }) => {
+          if (split) {
+            tl.to(
+              split[type],
+              {
+                opacity: 1,
+                filter: 'blur(0px)',
+                stagger: { amount: stagger, from: 'random' },
+              },
+              '<+0.25'
+            )
+          }
+        })
       }
     })
 
