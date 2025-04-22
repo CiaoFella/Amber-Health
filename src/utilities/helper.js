@@ -168,3 +168,44 @@ export function initDropdownHoverBehavior() {
     })
   })
 }
+
+export function reinitializeScripts(container) {
+  // Find all script tags within the provided container
+  const scripts = container.querySelectorAll('script')
+
+  scripts.forEach((script) => {
+    // Prioritize scripts with 'src'. Handle others cautiously.
+    // You might need to refine the conditions based on specific inline scripts.
+    if (script.src /* || script.id === 'specific-inline-id' */) {
+      const newScript = document.createElement('script')
+
+      // Copy all attributes from the original script to the new one
+      script.getAttributeNames().forEach((attrName) => {
+        const attrValue = script.getAttribute(attrName)
+        newScript.setAttribute(attrName, attrValue)
+      })
+
+      // If it's an inline script (no src), copy its content
+      // Use this carefully, as re-executing inline scripts can be problematic
+      if (!script.src) {
+        newScript.textContent = script.textContent
+      }
+
+      // Append the new script to the document's head to execute it.
+      // Appending to head is common, but body also works.
+      document.head.appendChild(newScript)
+
+      // Optional: Remove the new script element after it has presumably executed
+      // This can prevent clutter but adds slight complexity.
+      // if (newScript.src) { // Only for external scripts
+      //   newScript.onload = () => setTimeout(() => newScript.remove(), 0);
+      // } else { // For inline scripts, remove immediately
+      //   setTimeout(() => newScript.remove(), 0);
+      // }
+
+      // Optional: Remove the original script from the barba container
+      // Prevents potential issues if the container is ever re-parsed
+      // script.remove();
+    }
+  })
+}
